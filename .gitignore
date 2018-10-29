@@ -1,5 +1,6 @@
 *.iml
 .gradle
+RxAndroidExample/
 /local.properties
 /.idea/libraries
 /.idea/modules.xml

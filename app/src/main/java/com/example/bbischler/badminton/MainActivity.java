@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
             training[i] = new Training(i, "Training Nr. " + i);
         }
 
+//        final simpleList = (ListView) findViewById(R.id.trainingList);
+//        CustomAdapter customAdapter = new CustomAdapter(getApplicationContext(), training);
+
         final ListView listview = (ListView) findViewById(R.id.trainingList);
         listview.setAdapter(customAdapter);
 
@@ -50,6 +53,14 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
                                     long arg3) {
                 Log.d("############", "Items " + training[pos].name);
+                Intent intent = new Intent(MainActivity.this, DetailedTrainingActivity.class);
+                Bundle b = new Bundle();
+                b.putInt("trainingID", training[pos].id);
+                b.putInt(training[pos].name, 1); //Your id
+                intent.putExtras(b); //Put your id to your next Intent
+                startActivity(intent);
+                finish();
+//                startActivity(new Intent(MainActivity.this, DetailedTrainingActivity.class));
             }
 
         });

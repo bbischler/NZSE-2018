@@ -3,20 +3,20 @@ package com.example.bbischler.badminton;
 public class Training {
 
 
-    Number id;
+    Integer id;
     String name;
 
 
-    public Training(Number id, String name) {
+    public Training(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Number getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Number id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

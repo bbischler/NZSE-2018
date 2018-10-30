@@ -3,6 +3,7 @@ package com.example.bbischler.badminton;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,17 +20,20 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
         final ListView listview = findViewById(R.id.trainingList);
 
         for (int i = 0; i < 20; i++) {
-            training.add(new Training(i+7, "Training Nr. " + i));
+            training.add(new Training(i + 7, "Training Nr. " + i));
         }
 
         ArrayAdapter<Training> adapter = new ArrayAdapter<Training>(this,
-                android.R.layout.simple_list_item_1, training);
+                R.layout.traininglist,R.id.textView_name, training);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -36,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
                                     long arg3) {
-                Training selectedTraining = (Training)arg0.getItemAtPosition(pos);
+                Training selectedTraining = (Training) arg0.getItemAtPosition(pos);
                 Log.d("############", "Items " + selectedTraining.name);
                 Intent intent = new Intent(MainActivity.this, DetailedTrainingActivity.class);
                 Bundle b = new Bundle();

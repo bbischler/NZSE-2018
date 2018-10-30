@@ -2,13 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:orientation="vertical">
 
     <ListView
         android:id="@+id/trainingList"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@color/material_blue_grey_800"
-        android:dividerHeight="1dp"
-        android:footerDividersEnabled="false" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="20.0dp"
+        android:footerDividersEnabled="false"
+        android:scrollIndicators="right" />
 </LinearLayout>

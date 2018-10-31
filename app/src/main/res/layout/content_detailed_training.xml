@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".DetailedTrainingActivity"
-    tools:showIn="@layout/activity_detailed_training">
+    android:orientation="horizontal"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
-        android:id="@+id/test"
-        android:layout_width="276dp"
-        android:layout_height="178dp"
-        android:text="TEEEEST"
-        tools:layout_editor_absoluteX="104dp"
-        tools:layout_editor_absoluteY="103dp" />
-</android.support.constraint.ConstraintLayout>
+    <ListView
+        android:id="@+id/exerciseName"
+        android:layout_width="405dp"
+        android:layout_height="580dp"
+        android:layout_marginLeft="10dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="20.0dp"
+        android:footerDividersEnabled="false">
+
+    </ListView>
+
+</LinearLayout><!--<?xml version="1.0" encoding="utf-8"?>--><!--<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--app:layout_behavior="@string/appbar_scrolling_view_behavior"--><!--tools:context=".DetailedTrainingActivity"--><!--tools:showIn="@layout/activity_detailed_training">-->
+
+    <!--<TextView--><!--android:id="@+id/test"--><!--android:layout_width="276dp"--><!--android:layout_height="178dp"--><!--android:text="TEEEEST"--><!--android:textColor="#007ACC"--><!--tools:layout_editor_absoluteX="104dp"--><!--tools:layout_editor_absoluteY="103dp" />--><!--</android.support.constraint.ConstraintLayout>-->

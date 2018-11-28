@@ -12,14 +12,16 @@ public class Training {
     Date datum;
     Date beginTime;
     Date endTime;
+    String description;
     ArrayList<Exercise> excersises;
 
-    public Training(Integer id, String name, Date datum, Date beginTime, Date endTime) {
+    public Training(Integer id, String name, Date datum, Date beginTime, Date endTime, String description) {
         this.id = id;
         this.name = name;
         this.datum = datum;
         this.beginTime = beginTime;
         this.endTime = endTime;
+        this.description = description;
 
     }
 
@@ -64,7 +66,7 @@ public class Training {
     }
 
     public String getTime() {
-            return getBeginTime() + " - " + getEndTime();
+        return getBeginTime() + " - " + getEndTime();
     }
 
     public void setId(Integer id) {
@@ -77,6 +79,14 @@ public class Training {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

@@ -3,32 +3,34 @@ package com.example.bbischler.badminton;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.security.auth.Destroyable;
+
 public class Exercise {
 
 
     Integer id;
     String name;
+    Integer duration;
+    String description;
 
-
-    Date startTime;
-    Date endTime;
-
-    public Exercise(Integer id, String name, Date startTime, Date endTime) {
+    public Exercise(Integer id, String name, Integer duration, String description) {
         this.id = id;
         this.name = name;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.duration = duration;
+        this.description = description;
+
     }
 
 
     // Getter //
 
-    public Date getStartTime() {
-        return startTime;
+
+    public String getDuration() {
+        return duration + " min";
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public String getDescription() {
+        return description;
     }
 
     public Integer getId() {
@@ -40,12 +42,14 @@ public class Exercise {
     }
 
     // Setter //
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setId(Integer id) {
@@ -56,10 +60,5 @@ public class Exercise {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        return sdf.format(startTime )+ " - " + sdf.format(endTime) + " " + name;
-    }
 
 }

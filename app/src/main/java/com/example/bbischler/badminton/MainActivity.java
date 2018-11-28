@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,19 +20,27 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Training> training = new ArrayList<>();
     private trainingAdapter _trainingAdapter;
     private ListView listView;
+    private String description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam";
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
+        mTitle.setText(toolbar.getTitle());
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         listView = (ListView) findViewById(R.id.trainingList);
-        training.add(new Training(1, "Anfänger Darmstadt", new Date(), new Date(), new Date()));
-        training.add(new Training(2, "Ligamannschaft", new Date(), new Date(), new Date()));
-        training.add(new Training(3, "Anfänger Darmstadt", new Date(), new Date(), new Date()));
-        training.add(new Training(4, "Ligamannschaft", new Date(), new Date(), new Date()));
+        training.add(new Training(1, "Anfänger Darmstadt", new Date(), new Date(), new Date(), description));
+        training.add(new Training(2, "Ligamannschaft", new Date(), new Date(), new Date(), description));
+        training.add(new Training(3, "Anfänger Darmstadt", new Date(), new Date(), new Date(), description));
+        training.add(new Training(4, "Ligamannschaft", new Date(), new Date(), new Date(), description));
 
 
         _trainingAdapter = new trainingAdapter(this, training);
@@ -53,25 +62,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 }

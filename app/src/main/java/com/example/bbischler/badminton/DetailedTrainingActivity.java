@@ -1,12 +1,8 @@
 package com.example.bbischler.badminton;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,15 +12,24 @@ import java.util.Date;
 public class DetailedTrainingActivity extends AppCompatActivity {
     //    ArrayList<Training> training = new ArrayList<>();
     Training training;
+    private exerciseAdapter _exerciseAdapter;
+
     ArrayList<Exercise> excersises = new ArrayList<>();
+    String description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam";
+    String descriptionExercise = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, ";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_training);
+
+//        Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
+        mTitle.setText(toolbar.getTitle());
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
         Bundle b = getIntent().getExtras();
@@ -32,18 +37,25 @@ public class DetailedTrainingActivity extends AppCompatActivity {
         if (b != null)
             trainingID = b.getInt("trainingID");
 
-        training = new Training(trainingID, "testTraining", new Date(), new Date(), new Date());
+        training = new Training(trainingID, "testTraining", new Date(), new Date(), new Date(), description);
 
         final ListView listview = findViewById(R.id.exerciseName);
 
-        for (int i = 0; i < 20; i++) {
-            excersises.add(new Exercise(i, "exercisename" + i, new Date(), new Date()));
+        for (int i = 0; i < 4; i++) {
+            excersises.add(new Exercise(i, "exercisename" + i, 10 + i, descriptionExercise));
         }
         training.setExcersises(excersises);
 
-        ArrayAdapter<Exercise> adapter = new ArrayAdapter<Exercise>(this,
-                R.layout.exercise, R.id.textView_exerciseName, training.excersises);
-        listview.setAdapter(adapter);
+        TextView trainingDate = (TextView) findViewById(R.id.textView_date);
+        trainingDate.setText(training.getDatum());
+        TextView trainingTime = (TextView) findViewById(R.id.textView_time);
+        trainingTime.setText(training.getTime());
+        TextView trainingDesc = (TextView) findViewById(R.id.textView_desc);
+        trainingDesc.setText(training.getDescription());
+
+        _exerciseAdapter = new exerciseAdapter(this, excersises);
+        listview.setAdapter(_exerciseAdapter);
+
 
 //        TextView test = (TextView) findViewById(R.id.test);
 //        test.setText("TrainigsID: " + trainingID);

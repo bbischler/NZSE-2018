@@ -9,22 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class trainingAdapter extends ArrayAdapter<Training> {
+public class exerciseAdapter extends ArrayAdapter<Exercise> {
 
     private Context mContext;
-    private List<Training> trainingListList = new ArrayList<>();
+    private List<Exercise> exerciseList = new ArrayList<>();
 
-    public trainingAdapter(@NonNull Context context, @LayoutRes ArrayList<Training> list) {
+    public exerciseAdapter(@NonNull Context context, @LayoutRes ArrayList<Exercise> list) {
         super(context, 0, list);
         mContext = context;
-        trainingListList = list;
+        exerciseList = list;
     }
 
     @NonNull
@@ -34,17 +33,17 @@ public class trainingAdapter extends ArrayAdapter<Training> {
         if (listItem == null)
             listItem = LayoutInflater.from(mContext).inflate(R.layout.traininglist, parent, false);
 
-        Training currentTraining = trainingListList.get(position);
+        Exercise currentExercise = exerciseList.get(position);
 
 
-        TextView name = (TextView) listItem.findViewById(R.id.textView_name);
-        name.setText(currentTraining.getName());
+        TextView name = (TextView) listItem.findViewById(R.id.textView_exerciseName);
+        name.setText(currentExercise.getName());
 
-        TextView datum = (TextView) listItem.findViewById(R.id.textView_date);
-        datum.setText(currentTraining.getDatum());
+        TextView time = (TextView) listItem.findViewById(R.id.textView_exerciseTime);
+        time.setText(currentExercise.getDuration());
 
-        TextView time = (TextView) listItem.findViewById(R.id.textView_time);
-        time.setText(currentTraining.getTime());
+        TextView desc = (TextView) listItem.findViewById(R.id.textView_exerciseDesc);
+        desc.setText(currentExercise.getDescription());
 
         return listItem;
     }

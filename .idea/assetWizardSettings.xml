@@ -3,6 +3,11 @@
   <component name="WizardSettings">
     <option name="children">
       <map>
+        <entry key="imageWizard">
+          <value>
+            <PersistentState />
+          </value>
+        </entry>
         <entry key="vectorWizard">
           <value>
             <PersistentState>
@@ -28,8 +33,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_keyboard_arrow_right_black_24dp" />
-                            <entry key="sourceFile" value="C:\Users\b.bischler" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_badminton" />
+                            <entry key="sourceFile" value="D:\4_Semester\NZSE Praktikum\app\src\main\res\drawable\badminton.svg" />
                           </map>
                         </option>
                       </PersistentState>

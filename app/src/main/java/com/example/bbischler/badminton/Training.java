@@ -1,5 +1,6 @@
 package com.example.bbischler.badminton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,35 +24,47 @@ public class Training {
     }
 
 
-    public ArrayList<Exercise> getExcersises() { return excersises; }
+    public ArrayList<Exercise> getExcersises() {
+        return excersises;
+    }
 
-    public void setExcersises(ArrayList<Exercise> excersises) { this.excersises = excersises; }
+    public void setExcersises(ArrayList<Exercise> excersises) {
+        this.excersises = excersises;
+    }
 
     public Integer getId() {
         return id;
     }
-    public Date getDatum() {
-        return datum;
+
+    public String getDatum() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yy");
+        return sdf.format(datum);
     }
 
     public void setDatum(Date datum) {
         this.datum = datum;
     }
 
-    public Date getBeginTime() {
-        return beginTime;
+    public String getBeginTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        return sdf.format(beginTime);
     }
 
     public void setBeginTime(Date beginTime) {
         this.beginTime = beginTime;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public String getEndTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        return sdf.format(endTime);
     }
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public String getTime() {
+            return getBeginTime() + " - " + getEndTime();
     }
 
     public void setId(Integer id) {

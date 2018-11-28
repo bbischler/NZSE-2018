@@ -9,16 +9,16 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Training> training = new ArrayList<>();
+    private trainingAdapter _trainingAdapter;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,22 +26,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Date datum = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
-        final ListView listview = findViewById(R.id.trainingList);
-
+        listView = (ListView) findViewById(R.id.trainingList);
         training.add(new Training(1, "Anfänger Darmstadt", new Date(), new Date(), new Date()));
         training.add(new Training(2, "Ligamannschaft", new Date(), new Date(), new Date()));
         training.add(new Training(3, "Anfänger Darmstadt", new Date(), new Date(), new Date()));
-        training.add(new Training(4, "Darmstadt", new Date(), new Date(), new Date()));
+        training.add(new Training(4, "Ligamannschaft", new Date(), new Date(), new Date()));
 
-            // HIER WIRD WAHRSCHEINLICH EIN CUSTOM ADAPTER BENÖTIGT //
-        ArrayAdapter<Training> adapter = new ArrayAdapter<Training>(this,
-                R.layout.traininglist, R.id.textView_name, training);
-        listview.setAdapter(adapter);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        _trainingAdapter = new trainingAdapter(this, training);
+        listView.setAdapter(_trainingAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos,

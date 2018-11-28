@@ -35,22 +35,22 @@
 
                 <TextView
                     android:id="@+id/textView_date"
-                    android:layout_width="149dp"
+                    android:layout_width="108dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:gravity="center_vertical"
                     android:textColor="@android:color/white"
-                    android:textSize="25sp"
+                    android:textSize="20sp"
                     android:textStyle="normal" />
 
                 <TextView
                     android:id="@+id/textView_time"
-                    android:layout_width="149dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:gravity="center_vertical"
+                    android:gravity="right"
                     android:textColor="@android:color/white"
-                    android:textSize="25sp"
+                    android:textSize="20sp"
                     android:textStyle="normal" />
             </LinearLayout>
 

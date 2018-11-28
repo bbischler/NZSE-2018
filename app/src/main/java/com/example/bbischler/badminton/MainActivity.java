@@ -12,7 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,16 +26,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        Date datum = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
         final ListView listview = findViewById(R.id.trainingList);
 
-        for (int i = 0; i < 20; i++) {
-            training.add(new Training(i + 7, "Training Nr. " + i));
-        }
+        training.add(new Training(1, "Anfänger Darmstadt", new Date(), new Date(), new Date()));
+        training.add(new Training(2, "Ligamannschaft", new Date(), new Date(), new Date()));
+        training.add(new Training(3, "Anfänger Darmstadt", new Date(), new Date(), new Date()));
+        training.add(new Training(4, "Darmstadt", new Date(), new Date(), new Date()));
 
+            // HIER WIRD WAHRSCHEINLICH EIN CUSTOM ADAPTER BENÖTIGT //
         ArrayAdapter<Training> adapter = new ArrayAdapter<Training>(this,
-                R.layout.traininglist,R.id.textView_name, training);
+                R.layout.traininglist, R.id.textView_name, training);
         listview.setAdapter(adapter);
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -13,7 +13,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:divider="@android:color/transparent"
-        android:dividerHeight="20.0dp"
+        android:dividerHeight="10.0dp"
         android:footerDividersEnabled="false"
         android:scrollIndicators="right" />
 </LinearLayout>

@@ -32,7 +32,7 @@ public class DetailedTrainingActivity extends AppCompatActivity {
         if (b != null)
             trainingID = b.getInt("trainingID");
 
-        training = new Training(trainingID, "testTraining");
+        training = new Training(trainingID, "testTraining", new Date(), new Date(), new Date());
 
         final ListView listview = findViewById(R.id.exerciseName);
 

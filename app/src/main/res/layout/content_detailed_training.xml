@@ -6,11 +6,13 @@
     android:background="@color/background"
     android:orientation="vertical"
     android:padding="20dp"
+    android:scrollIndicators="right"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:background="@color/colorPrimaryLight">
 
         <LinearLayout
@@ -63,12 +65,11 @@
     </FrameLayout>
 
     <ListView
-        android:id="@+id/exerciseName"
+        android:id="@+id/exerciseList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@android:color/transparent"
-        android:dividerHeight="20.0dp"
-        android:footerDividersEnabled="false">
-    </ListView>
+        android:dividerHeight="10.0dp"
+        android:footerDividersEnabled="false" />
 
 </LinearLayout>

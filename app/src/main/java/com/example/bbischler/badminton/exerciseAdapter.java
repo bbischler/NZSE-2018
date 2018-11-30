@@ -1,4 +1,3 @@
-
 package com.example.bbischler.badminton;
 
 import android.content.Context;
@@ -17,13 +16,13 @@ import java.util.List;
 
 public class exerciseAdapter extends ArrayAdapter<Exercise> {
 
-    private Context mContext;
-    private List<Exercise> exerciseList = new ArrayList<>();
+    private Context eContext;
+    private List<Exercise> exerciseListList = new ArrayList<>();
 
     public exerciseAdapter(@NonNull Context context, @LayoutRes ArrayList<Exercise> list) {
         super(context, 0, list);
-        mContext = context;
-        exerciseList = list;
+        eContext = context;
+        exerciseListList = list;
     }
 
     @NonNull
@@ -31,20 +30,21 @@ public class exerciseAdapter extends ArrayAdapter<Exercise> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItem = convertView;
         if (listItem == null)
-            listItem = LayoutInflater.from(mContext).inflate(R.layout.traininglist, parent, false);
+            listItem = LayoutInflater.from(eContext).inflate(R.layout.exercise, parent, false);
 
-        Exercise currentExercise = exerciseList.get(position);
-
+        Exercise currentTraining = exerciseListList.get(position);
 
         TextView name = (TextView) listItem.findViewById(R.id.textView_exerciseName);
-        name.setText(currentExercise.getName());
+        name.setText(currentTraining.getName());
 
         TextView time = (TextView) listItem.findViewById(R.id.textView_exerciseTime);
-        time.setText(currentExercise.getDuration());
+        time.setText(currentTraining.getDuration());
 
         TextView desc = (TextView) listItem.findViewById(R.id.textView_exerciseDesc);
-        desc.setText(currentExercise.getDescription());
+        desc.setText(currentTraining.getDescription());
 
         return listItem;
     }
+
+
 }

@@ -61,4 +61,9 @@ public class Exercise {
     }
 
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }

@@ -36,7 +36,6 @@ public class trainingAdapter extends ArrayAdapter<Training> {
 
         Training currentTraining = trainingListList.get(position);
 
-
         TextView name = (TextView) listItem.findViewById(R.id.textView_name);
         name.setText(currentTraining.getName());
 

@@ -59,6 +59,7 @@ public class DetailedTrainingActivity extends AppCompatActivity {
         listview.setAdapter(_exerciseAdapter);
 
 
+
 //        TextView test = (TextView) findViewById(R.id.test);
 //        test.setText("TrainigsID: " + trainingID);
 

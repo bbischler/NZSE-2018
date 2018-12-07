@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,8 +18,8 @@ public class DetailedTrainingActivity extends AppCompatActivity {
     Training training;
     private exerciseAdapter _exerciseAdapter;
     ArrayList<Exercise> excersises = new ArrayList<>();
-    String description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam";
-    String descriptionExercise = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, ";
+    String description = "Lorem ipsum dolor sit amet, conset etur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam";
+    String descriptionExercise = "Lorem ipsum dolor sit amet, conset etur sadipscing elitr";
 
 
     @Override
@@ -41,12 +42,11 @@ public class DetailedTrainingActivity extends AppCompatActivity {
 
         training = new Training(trainingID, "testTraining", new Date(), new Date(), new Date(), description);
 
-//        View header = getLayoutInflater().inflate(R.layout.headertraining, null);
 //        final ListView listview = findViewById(R.id.exerciseList);
         final RecyclerView rv = (RecyclerView) findViewById(R.id.exerciseList);
 
-        for (int i = 0; i < 10; i++) {
-            excersises.add(new Exercise(i, "exercisename" + i, 10 + i, descriptionExercise));
+        for (int i = 0; i < 3; i++) {
+            excersises.add(new Exercise(i, "Übung Nr. " + i, 10 + i, descriptionExercise));
         }
         training.setExcersises(excersises);
 
@@ -62,7 +62,7 @@ public class DetailedTrainingActivity extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(llm);
-//        rv.setNestedScrollingEnabled(false);
+        rv.setNestedScrollingEnabled(false);
 //        _exerciseAdapter = new exerciseAdapter(this, excersises);
 //        listview.setAdapter(_exerciseAdapter);
 //        listview.addHeaderView(header);
@@ -77,5 +77,6 @@ public class DetailedTrainingActivity extends AppCompatActivity {
 //            }
 //        });
     }
+
 
 }

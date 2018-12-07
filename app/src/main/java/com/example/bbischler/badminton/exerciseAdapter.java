@@ -55,4 +55,9 @@ public class exerciseAdapter extends
                 .inflate(R.layout.exercise,parent, false);
         return new MyViewHolder(v);
     }
+
+
+
+
+
 }

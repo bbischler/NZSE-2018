@@ -2,6 +2,8 @@ package com.example.bbischler.badminton;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -39,24 +41,31 @@ public class DetailedTrainingActivity extends AppCompatActivity {
 
         training = new Training(trainingID, "testTraining", new Date(), new Date(), new Date(), description);
 
-        View header = getLayoutInflater().inflate(R.layout.headertraining, null);
-        final ListView listview = findViewById(R.id.exerciseList);
+//        View header = getLayoutInflater().inflate(R.layout.headertraining, null);
+//        final ListView listview = findViewById(R.id.exerciseList);
+        final RecyclerView rv = (RecyclerView) findViewById(R.id.exerciseList);
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 10; i++) {
             excersises.add(new Exercise(i, "exercisename" + i, 10 + i, descriptionExercise));
         }
         training.setExcersises(excersises);
 
-        TextView trainingTime = header.findViewById(R.id.textView_time);
+        TextView trainingTime = (TextView) findViewById(R.id.textView_time);
         trainingTime.setText(training.getTime());
-        TextView trainingDate = header.findViewById(R.id.textView_date);
+        TextView trainingDate = (TextView) findViewById(R.id.textView_date);
         trainingDate.setText(training.getDatum());
-        TextView trainingDesc = header.findViewById(R.id.textView_desc);
+        TextView trainingDesc = (TextView) findViewById(R.id.textView_desc);
         trainingDesc.setText(training.getDescription());
 
-        _exerciseAdapter = new exerciseAdapter(this, excersises);
-        listview.setAdapter(_exerciseAdapter);
-        listview.addHeaderView(header);
+        _exerciseAdapter = new exerciseAdapter(excersises);
+        rv.setAdapter(_exerciseAdapter);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        rv.setLayoutManager(llm);
+//        rv.setNestedScrollingEnabled(false);
+//        _exerciseAdapter = new exerciseAdapter(this, excersises);
+//        listview.setAdapter(_exerciseAdapter);
+//        listview.addHeaderView(header);
 
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

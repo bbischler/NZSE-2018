@@ -1,50 +1,58 @@
 package com.example.bbischler.badminton;
-
-import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.example.bbischler.badminton.Exercise;
+import com.example.bbischler.badminton.R;
+
 import java.util.List;
 
+public class exerciseAdapter extends
+        RecyclerView.Adapter<exerciseAdapter.MyViewHolder> {
 
-public class exerciseAdapter extends ArrayAdapter<Exercise> {
+    private List<Exercise> list;
 
-    private Context eContext;
-    private List<Exercise> exerciseListList = new ArrayList<>();
+    /**
+     * View holder class
+     * */
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView name;
+        public TextView time;
+        public TextView desc;
 
-    public exerciseAdapter(@NonNull Context context, @LayoutRes ArrayList<Exercise> list) {
-        super(context, 0, list);
-        eContext = context;
-        exerciseListList = list;
+        public MyViewHolder(View view) {
+            super(view);
+            name = (TextView) view.findViewById(R.id.textView_exerciseName);
+            time = (TextView) view.findViewById(R.id.textView_exerciseTime);
+            desc = (TextView) view.findViewById(R.id.textView_exerciseDesc);
+
+        }
     }
 
-    @NonNull
+    public exerciseAdapter(List<Exercise> list) {
+        this.list = list;
+    }
+
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View listItem = convertView;
-        if (listItem == null)
-            listItem = LayoutInflater.from(eContext).inflate(R.layout.exercise, parent, false);
-
-        Exercise currentTraining = exerciseListList.get(position);
-
-        TextView name = (TextView) listItem.findViewById(R.id.textView_exerciseName);
-        name.setText(currentTraining.getName());
-
-        TextView time = (TextView) listItem.findViewById(R.id.textView_exerciseTime);
-        time.setText(currentTraining.getDuration());
-
-        TextView desc = (TextView) listItem.findViewById(R.id.textView_exerciseDesc);
-        desc.setText(currentTraining.getDescription());
-
-        return listItem;
+    public void onBindViewHolder(MyViewHolder holder, int position) {
+        Exercise e = list.get(position);
+        holder.name.setText(e.getName());
+        holder.time.setText(e.getDuration());
+        holder.desc.setText(e.getDescription());
     }
 
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
 
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.exercise,parent, false);
+        return new MyViewHolder(v);
+    }
 }

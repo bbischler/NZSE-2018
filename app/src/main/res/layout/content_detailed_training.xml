@@ -27,9 +27,9 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/background"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:layout_margin="5dp"
+                android:background="@android:color/white"
+                android:padding="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -47,9 +47,11 @@
                             android:layout_width="48dp"
                             android:layout_height="40dp"
                             android:layout_weight="1"
+                            android:background="@drawable/border_bottom"
                             android:gravity="center_vertical"
                             android:text="TextView"
                             android:textColor="@color/font"
+
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
@@ -58,7 +60,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_weight="1"
-                            android:background="@android:color/transparent"
+                            android:background="@drawable/border_bottom"
                             android:gravity="right|center_vertical"
                             android:text="TextView"
                             android:textAlignment="textEnd"
@@ -73,7 +75,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dp"
                         android:text="TextView"
-                        android:textColor="@color/font"
+                        android:textColor="@color/greyfont"
                         android:textSize="20sp" />
 
                 </LinearLayout>
@@ -89,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:divider="@android:color/transparent"
-                    android:dividerHeight="10dp"
+                    android:dividerHeight="20dp"
                     android:footerDividersEnabled="false" />
             </android.support.v4.widget.NestedScrollView>
 

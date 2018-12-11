@@ -40,12 +40,12 @@ public class DetailedTrainingActivity extends AppCompatActivity {
         if (b != null)
             trainingID = b.getInt("trainingID");
 
-        training = new Training(trainingID, "testTraining", new Date(), new Date(), new Date(), description);
+        training = new Training(trainingID, "testTraining", new Date(), new Date(), new Date(), description, 14);
 
 //        final ListView listview = findViewById(R.id.exerciseList);
         final RecyclerView rv = (RecyclerView) findViewById(R.id.exerciseList);
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 8; i++) {
             excersises.add(new Exercise(i, "Übung Nr. " + i, 10 + i, descriptionExercise));
         }
         training.setExcersises(excersises);
@@ -56,6 +56,8 @@ public class DetailedTrainingActivity extends AppCompatActivity {
         trainingDate.setText(training.getDatum());
         TextView trainingDesc = (TextView) findViewById(R.id.textView_desc);
         trainingDesc.setText(training.getDescription());
+        TextView numberStudents = (TextView) findViewById(R.id.textView_numberStudents);
+        numberStudents.setText(training.getStudentsNumber());
 
         _exerciseAdapter = new exerciseAdapter(excersises);
         rv.setAdapter(_exerciseAdapter);
@@ -63,6 +65,7 @@ public class DetailedTrainingActivity extends AppCompatActivity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(llm);
         rv.setNestedScrollingEnabled(false);
+        rv.setFocusable(false);
 //        _exerciseAdapter = new exerciseAdapter(this, excersises);
 //        listview.setAdapter(_exerciseAdapter);
 //        listview.addHeaderView(header);

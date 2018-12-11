@@ -37,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         listView = (ListView) findViewById(R.id.trainingList);
-        training.add(new Training(1, "Anfänger Darmstadt", new Date(), new Date(), new Date(), description));
-        training.add(new Training(2, "Ligamannschaft", new Date(), new Date(), new Date(), description));
-        training.add(new Training(3, "Anfänger Darmstadt", new Date(), new Date(), new Date(), description));
-        training.add(new Training(4, "Ligamannschaft", new Date(), new Date(), new Date(), description));
+        training.add(new Training(1, "Anfänger Darmstadt", new Date(), new Date(), new Date(), description, 14));
+        training.add(new Training(2, "Ligamannschaft", new Date(), new Date(), new Date(), description,13));
+        training.add(new Training(3, "Anfänger Darmstadt", new Date(), new Date(), new Date(), description,12));
+        training.add(new Training(4, "Ligamannschaft", new Date(), new Date(), new Date(), description,20));
 
 
         _trainingAdapter = new trainingAdapter(this, training);

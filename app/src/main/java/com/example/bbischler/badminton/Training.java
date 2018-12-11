@@ -14,14 +14,16 @@ public class Training {
     Date endTime;
     String description;
     ArrayList<Exercise> excersises;
+    Integer studentsNumber;
 
-    public Training(Integer id, String name, Date datum, Date beginTime, Date endTime, String description) {
+    public Training(Integer id, String name, Date datum, Date beginTime, Date endTime, String description, Integer students) {
         this.id = id;
         this.name = name;
         this.datum = datum;
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.description = description;
+        this.studentsNumber = students;
 
     }
 
@@ -87,6 +89,14 @@ public class Training {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStudentsNumber() {
+        return "Zusagen: "+studentsNumber;
+    }
+
+    public void setStudentsNumber(Integer studentsNumber) {
+        this.studentsNumber = studentsNumber;
     }
 
     @Override

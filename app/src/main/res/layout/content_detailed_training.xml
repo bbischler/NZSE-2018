@@ -27,9 +27,9 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@android:color/white"
-                android:padding="10dp">
+                android:layout_margin="10dp"
+                android:background="@drawable/card_background"
+                android:padding="15dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -78,6 +78,14 @@
                         android:textColor="@color/greyfont"
                         android:textSize="20sp" />
 
+                    <TextView
+                        android:id="@+id/textView_numberStudents"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:text="TextView"
+                        android:textSize="16sp" />
+
                 </LinearLayout>
             </FrameLayout>
 
@@ -90,7 +98,7 @@
                     android:id="@+id/exerciseList"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:divider="@android:color/transparent"
+                    android:divider="@color/background"
                     android:dividerHeight="20dp"
                     android:footerDividersEnabled="false" />
             </android.support.v4.widget.NestedScrollView>

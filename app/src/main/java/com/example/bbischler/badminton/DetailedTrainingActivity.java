@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -13,11 +14,17 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class DetailedTrainingActivity extends AppCompatActivity {
+public class DetailedTrainingActivity extends AppCompatActivity implements StartDragListener {
     Training training;
-    private exerciseAdapter _exerciseAdapter;
-    ArrayList<Exercise> excersises = new ArrayList<>();
+    RecyclerViewAdapter mAdapter;
+    ItemTouchHelper touchHelper;
+    TextView trainingTime;
+    TextView trainingDate;
+    TextView trainingDesc;
+    private RecyclerView recyclerview;
+    List<Exercise> excersises = new ArrayList<>();
     String description = "Lorem ipsum dolor sit amet, conset etur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam";
     String descriptionExercise = "Lorem ipsum dolor sit amet, conset etur sadipscing elitr";
 
@@ -26,6 +33,13 @@ public class DetailedTrainingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_training);
+        Bundle b = getIntent().getExtras();
+        int trainingID = -1; // or other values
+        if (b != null)
+            trainingID = b.getInt("trainingID");
+        training = new Training(trainingID, "testTraining", new Date(), new Date(), new Date(), description, 14);
+        recyclerview = (RecyclerView) findViewById(R.id.exerciseList);
+        mAdapter = new RecyclerViewAdapter(excersises, this);
 
 //        Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -34,51 +48,38 @@ public class DetailedTrainingActivity extends AppCompatActivity {
         mTitle.setText(toolbar.getTitle());
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
-        Bundle b = getIntent().getExtras();
-        int trainingID = -1; // or other values
-        if (b != null)
-            trainingID = b.getInt("trainingID");
-
-        training = new Training(trainingID, "testTraining", new Date(), new Date(), new Date(), description, 14);
-
-//        final ListView listview = findViewById(R.id.exerciseList);
-        final RecyclerView rv = (RecyclerView) findViewById(R.id.exerciseList);
-
+//        Mock Exercises
         for (int i = 0; i < 8; i++) {
             excersises.add(new Exercise(i, "Übung Nr. " + i, 10 + i, descriptionExercise));
         }
         training.setExcersises(excersises);
 
-        TextView trainingTime = (TextView) findViewById(R.id.textView_time);
+        trainingTime = (TextView) findViewById(R.id.textView_time);
         trainingTime.setText(training.getTime());
-        TextView trainingDate = (TextView) findViewById(R.id.textView_date);
+        trainingDate = (TextView) findViewById(R.id.textView_date);
         trainingDate.setText(training.getDatum());
-        TextView trainingDesc = (TextView) findViewById(R.id.textView_desc);
+        trainingDesc = (TextView) findViewById(R.id.textView_desc);
         trainingDesc.setText(training.getDescription());
         TextView numberStudents = (TextView) findViewById(R.id.textView_numberStudents);
         numberStudents.setText(training.getStudentsNumber());
 
-        _exerciseAdapter = new exerciseAdapter(excersises);
-        rv.setAdapter(_exerciseAdapter);
+
+        ItemTouchHelper.Callback callback =
+                new ItemMoveCallback(mAdapter);
+        touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(recyclerview);
+        recyclerview.setAdapter(mAdapter);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-        rv.setLayoutManager(llm);
-        rv.setNestedScrollingEnabled(false);
-        rv.setFocusable(false);
-//        _exerciseAdapter = new exerciseAdapter(this, excersises);
-//        listview.setAdapter(_exerciseAdapter);
-//        listview.addHeaderView(header);
+        recyclerview.setLayoutManager(llm);
+        recyclerview.setNestedScrollingEnabled(false);
+        recyclerview.setFocusable(false);
 
+    }
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+    @Override
+    public void requestDrag(RecyclerView.ViewHolder viewHolder) {
+        touchHelper.startDrag(viewHolder);
     }
 
 

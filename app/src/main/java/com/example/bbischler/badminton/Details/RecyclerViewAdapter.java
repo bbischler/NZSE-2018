@@ -2,11 +2,13 @@ package com.example.bbischler.badminton.Details;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bbischler.badminton.Model.Exercise;
@@ -23,6 +25,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
+        LinearLayout viewForeground;
         private TextView name;
         private TextView time;
         private TextView desc;
@@ -32,6 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public MyViewHolder(View itemView) {
             super(itemView);
 
+            viewForeground = itemView.findViewById(R.id.viewForeground);
             rowView = itemView;
             name = itemView.findViewById(R.id.textView_exerciseName);
             time = itemView.findViewById(R.id.textView_exerciseTime);
@@ -71,6 +75,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         });
     }
 
+    public void removeItem(int position) {
+        data.remove(position);
+        // notify the item removed by position
+        // to perform recycler view delete animations
+        // NOTE: don't call notifyDataSetChanged()
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Exercise item, int position) {
+        data.add(position, item);
+        // notify item added by position
+        notifyItemInserted(position);
+    }
 
     @Override
     public int getItemCount() {

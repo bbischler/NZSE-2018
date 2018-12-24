@@ -1,4 +1,4 @@
-package com.example.bbischler.badminton;
+package com.example.bbischler.badminton.Details;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,11 +6,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.bbischler.badminton.Model.Exercise;
+import com.example.bbischler.badminton.Model.Training;
+import com.example.bbischler.badminton.R;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,7 +27,6 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
     List<Exercise> excersises = new ArrayList<>();
     String description = "Lorem ipsum dolor sit amet, conset etur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam";
     String descriptionExercise = "Lorem ipsum dolor sit amet, conset etur sadipscing elitr";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +80,4 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
     public void requestDrag(RecyclerView.ViewHolder viewHolder) {
         touchHelper.startDrag(viewHolder);
     }
-
-
 }

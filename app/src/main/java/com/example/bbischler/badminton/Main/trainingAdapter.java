@@ -1,5 +1,5 @@
 
-package com.example.bbischler.badminton;
+package com.example.bbischler.badminton.Main;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.bbischler.badminton.Model.Training;
+import com.example.bbischler.badminton.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.bbischler.badminton;
+package com.example.bbischler.badminton.Details;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

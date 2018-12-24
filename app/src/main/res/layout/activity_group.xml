@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Details.DetailedTrainingActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Group.GroupActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -27,31 +28,11 @@
                 android:layout_gravity="center"
                 android:textSize="25sp" />
 
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="end"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/ic_badminton"
-                android:tint="@android:color/white" />
-
-
         </android.support.v7.widget.Toolbar>
+
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_detailed_training" />
-
-
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--app:srcCompat="@android:drawable/ic_dialog_email" />-->
+    <include layout="@layout/content_group" />
 
 </android.support.design.widget.CoordinatorLayout>
-

@@ -1,7 +1,6 @@
-package com.example.bbischler.badminton;
+package com.example.bbischler.badminton.Details;
 
 import android.graphics.Color;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -10,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.example.bbischler.badminton.Model.Exercise;
+import com.example.bbischler.badminton.R;
+
 import java.util.Collections;
 import java.util.List;
 

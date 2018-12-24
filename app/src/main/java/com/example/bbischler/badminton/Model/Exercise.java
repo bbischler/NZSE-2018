@@ -1,4 +1,4 @@
-package com.example.bbischler.badminton;
+package com.example.bbischler.badminton.Model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

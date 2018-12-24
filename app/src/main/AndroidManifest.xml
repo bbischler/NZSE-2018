@@ -14,11 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity"
-            android:label="Übersicht"
-            android:theme="@style/AppTheme.NoActionBar">
-
+        <activity android:name=".LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,13 +22,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailedTrainingActivity"
+            android:name=".Main.MainActivity"
+            android:label="Übersicht"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Details.DetailedTrainingActivity"
             android:label="Training"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login">
-        </activity>
+            android:name=".Group.GroupActivity"
+            android:label="@string/title_activity_group"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Login.TrainerLoginActivity"
+            android:label="@string/title_activity_trainer_login"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

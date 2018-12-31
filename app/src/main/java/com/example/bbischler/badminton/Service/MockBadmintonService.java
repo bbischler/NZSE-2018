@@ -2,14 +2,20 @@ package com.example.bbischler.badminton.Service;
 
 import com.example.bbischler.badminton.Model.Group;
 import com.example.bbischler.badminton.Model.Training;
+import com.example.bbischler.badminton.Model.User;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MockBadmintonService implements IBadmintonServiceInterface {
     @Override
-    public void login(String username, String passwordHash) {
+    public User login(String email, String password) {
+        for(User user : LocalDatabase.getInstance().Trainer){
+            if(user.getEmail().equals(email) && user.getPassword().equals(password))
+                return user;
+        }
 
+        return null;
     }
 
     @Override
@@ -29,5 +35,25 @@ public class MockBadmintonService implements IBadmintonServiceInterface {
         return trainings;
     }
 
+    @Override
+    public void cancelTraining(Integer id) {
+        Training obj = null;
 
+        for(Training t : LocalDatabase.getInstance().Trainings)
+            if(t.getId() == id)
+                obj = t;
+        if(obj != null)
+            obj.setCancelled(true);
+    }
+
+    @Override
+    public Training getTraining(int id) {
+        Training obj = null;
+
+        for(Training t : LocalDatabase.getInstance().Trainings)
+            if(t.getId() == id)
+                return t;
+
+        return null;
+    }
 }

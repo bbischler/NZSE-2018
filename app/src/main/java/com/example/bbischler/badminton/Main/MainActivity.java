@@ -16,13 +16,16 @@ import android.widget.TextView;
 import com.example.bbischler.badminton.Details.DetailedTrainingActivity;
 import com.example.bbischler.badminton.Group.GroupActivity;
 import com.example.bbischler.badminton.Login.TrainerLoginActivity;
+import com.example.bbischler.badminton.Model.AcceptState;
 import com.example.bbischler.badminton.Model.Training;
 import com.example.bbischler.badminton.R;
 import com.example.bbischler.badminton.Service.IBadmintonServiceInterface;
 import com.example.bbischler.badminton.Service.MockBadmintonService;
+import com.example.bbischler.badminton.Service.MySession;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,11 +34,13 @@ public class MainActivity extends AppCompatActivity {
     private trainingAdapter _trainingAdapter;
     private ListView listView;
     private String description;
+    Menu menu;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        this.menu = menu;
         return true;
     }
 
@@ -58,16 +63,6 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.trainingList);
         getTrainings();
 
-
-
-/*
-        training.add(new Training(1, "Anfänger Darmstadt", new Date(), new Date(), new Date(), description, 14));
-        training.add(new Training(2, "Ligamannschaft", new Date(), new Date(), new Date(), description,13));
-        training.add(new Training(3, "Anfänger Darmstadt", new Date(), new Date(), new Date(), description,12));
-        training.add(new Training(4, "Ligamannschaft", new Date(), new Date(), new Date(), description,20));
-
-*/
-
         _trainingAdapter = new trainingAdapter(this, training);
         listView.setAdapter(_trainingAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -81,62 +76,111 @@ public class MainActivity extends AppCompatActivity {
                 Bundle b = new Bundle();
                 b.putInt("trainingID", selectedTraining.getId());
                 intent.putExtras(b);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
 
         });
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                Integer TrainingsId = data.getIntExtra("TrainingsId", -1);
+                String action = data.getStringExtra("action");
+                String userMode = data.getStringExtra("userMode");
+                Training obj = null;
+
+                if(TrainingsId == -1)
+                    return;
+
+                for(Training t : training)
+                    if(t.getId() == TrainingsId){
+                        obj = t;
+                        break;
+                    }
+
+
+                if(action.equals("cancel")){
+                    if(userMode.equals("trainer"))
+                        obj.setCancelled(true);
+                    else
+                        obj.setAcceptState(AcceptState.Cancelled);
+                    _trainingAdapter.notifyDataSetChanged();
+                }
+
+                if(action.equals("accept")){
+                    obj.setAcceptState(AcceptState.Accepted);
+                    _trainingAdapter.notifyDataSetChanged();
+                }
+            }
+        }
+    }
+
     private void getTrainings() {
         ArrayList<String> myCodes;
+        Hashtable<Integer, Boolean> myCancellations;
         Gson gson = new Gson();
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         String json = pref.getString("myCodes", "");
         myCodes = (json == "") ? new ArrayList<String>() : gson.fromJson(json, ArrayList.class);
 
+        json = pref.getString("myCancellations", "");
+        myCancellations = (json == "") ? new Hashtable<Integer, Boolean> () : gson.fromJson(json, Hashtable.class);
+
         for(String code : myCodes){
-            training.addAll(service.getTrainingsForGroup(code));
+            ArrayList<Training> tmptrainings = service.getTrainingsForGroup(code);
+            for(Training t : tmptrainings){
+                if(myCancellations.containsKey(t.getId().toString())){
+                    t.setAcceptState(myCancellations.get(t.getId().toString()) ? AcceptState.Accepted : AcceptState.Cancelled);
+                }
+                else{
+                    t.setAcceptState(AcceptState.Unset);
+                }
+            }
+
+            training.addAll(tmptrainings);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if(MySession.isUserLoggedIn()){
+            MenuItem loginMenuItem = menu.findItem(R.id.trainerLogin);
+            loginMenuItem.setTitle("Logout");
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
         switch (item.getItemId()) {
             case R.id.groupAdd:
-                intent = new Intent(this, GroupActivity.class);
+                Intent intent = new Intent(this, GroupActivity.class);
                 intent.putExtra("isNavigatable", true);
                 startActivity(intent);
                 return true;
             case R.id.trainerLogin:
-                intent = new Intent(this, TrainerLoginActivity.class);
-                startActivity(intent);
+                if(MySession.isUserLoggedIn())
+                    logout();
+                else
+                    showLogin();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    private void showLogin() {
+        Intent intent = new Intent(this, TrainerLoginActivity.class);
+        startActivity(intent);
+    }
+
+    private void logout() {
+        MySession.loggedInUser = null;
+        MenuItem loginMenuItem = menu.findItem(R.id.trainerLogin);
+        loginMenuItem.setTitle("Trainer Login");
+    }
 }

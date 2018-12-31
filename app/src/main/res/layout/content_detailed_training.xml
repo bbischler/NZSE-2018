@@ -90,6 +90,7 @@
             </FrameLayout>
 
             <android.support.v4.widget.NestedScrollView
+                android:id="@+id/exerciseList_View"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fillViewport="true">
@@ -118,7 +119,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btn_zusagen"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -129,12 +130,22 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btn_absagen"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/background"
             android:text="Absagen"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <Button
+            android:id="@+id/btn_NeueUebung"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/background"
+            android:text="Neue Übung"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
             android:textStyle="bold" />

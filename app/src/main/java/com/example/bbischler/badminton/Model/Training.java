@@ -1,12 +1,39 @@
 package com.example.bbischler.badminton.Model;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 public class Training {
 
+    public boolean isCancelled() {
+        return isCancelled;
+    }
 
+    public void setCancelled(boolean cancelled) {
+        isCancelled = cancelled;
+    }
+
+    public int getNumberParticipants() {
+        return numberParticipants;
+    }
+
+    public void setNumberParticipants(int numberParticipants) {
+        this.numberParticipants = numberParticipants;
+    }
+
+    public AcceptState getAcceptState() {
+        return acceptState;
+    }
+
+    public void setAcceptState(AcceptState acceptState) {
+        this.acceptState = acceptState;
+    }
+
+    AcceptState acceptState;
+    int numberParticipants;
+    boolean isCancelled;
     Integer id;
     String name;
     Date datum;
@@ -24,7 +51,7 @@ public class Training {
         this.endTime = endTime;
         this.description = description;
         this.studentsNumber = students;
-
+        this.acceptState = AcceptState.Unset;
     }
 
 

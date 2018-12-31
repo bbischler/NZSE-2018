@@ -69,12 +69,17 @@ public class GroupActivity extends AppCompatActivity {
         String json = pref.getString("myCodes", "");
         myCodes = (json == "") ? new ArrayList<String>() : gson.fromJson(json, ArrayList.class);
 
-        myCodes.add(groupCode);
-        json = gson.toJson(myCodes);
-        prefsEditor.putString("myCodes", json);
-        prefsEditor.commit();
+        if(!myCodes.contains(groupCode)){
+            myCodes.add(groupCode);
+            json = gson.toJson(myCodes);
+            prefsEditor.putString("myCodes", json);
+            prefsEditor.commit();
+        }
 
-        returnToOverview();
+        if(backButtonEnabled)
+            onBackPressed();
+        else
+            returnToOverview();
     }
 
     private void returnToOverview() {

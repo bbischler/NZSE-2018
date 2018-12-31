@@ -1,5 +1,8 @@
 package com.example.bbischler.badminton.Details;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -7,6 +10,7 @@ import android.graphics.ColorSpace;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -15,54 +19,100 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.bbischler.badminton.Model.AcceptState;
 import com.example.bbischler.badminton.Model.Exercise;
 import com.example.bbischler.badminton.Model.Training;
 import com.example.bbischler.badminton.R;
+import com.example.bbischler.badminton.Service.IBadmintonServiceInterface;
+import com.example.bbischler.badminton.Service.MockBadmintonService;
+import com.example.bbischler.badminton.Service.MySession;
+import com.google.gson.Gson;
 
+import java.nio.file.Files;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 
 public class DetailedTrainingActivity extends AppCompatActivity implements StartDragListener, RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
     Training training;
     RecyclerViewAdapter mAdapter;
+    NestedScrollView view_exerciseList;
     ItemTouchHelper touchHelper;
     TextView trainingTime;
     TextView trainingDate;
     TextView trainingDesc;
+    Button btn_Zusage;
+    Button btn_Absage;
+    Button btn_NeueUebung;
     private RecyclerView recyclerview;
     CoordinatorLayout rootlayout;
     List<Exercise> excersises = new ArrayList<>();
     String description = "Lorem ipsum dolor sit amet, conset etur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam";
     String descriptionExercise = "Lorem ipsum dolor sit amet, conset etur sadipscing elitr";
+    IBadmintonServiceInterface service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_training);
+
+        service = new MockBadmintonService();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        setSupportActionBar(toolbar);
+        mTitle.setText(toolbar.getTitle());
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         Bundle b = getIntent().getExtras();
         int trainingID = -1; // or other values
         if (b != null)
             trainingID = b.getInt("trainingID");
         rootlayout = findViewById(R.id.root);
-        training = new Training(trainingID, "testTraining", new Date(), new Date(), new Date(), description, 14);
+        btn_Absage = findViewById(R.id.btn_absagen);
+        btn_Zusage = findViewById(R.id.btn_zusagen);
+        btn_NeueUebung = findViewById(R.id.btn_NeueUebung);
+        view_exerciseList = findViewById(R.id.exerciseList_View);
+        training = service.getTraining(trainingID);
         recyclerview = (RecyclerView) findViewById(R.id.exerciseList);
         mAdapter = new RecyclerViewAdapter(excersises, this);
+
+        btn_Absage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_Absage_onClick(v);
+            }
+        });
+
+        btn_Zusage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_Zusage_onClick(v);
+            }
+        });
+
+        if(!MySession.isUserLoggedIn()){
+            view_exerciseList.setVisibility(View.GONE);
+            btn_NeueUebung.setVisibility(View.GONE);
+        }
+        else{
+            btn_Zusage.setVisibility(View.GONE);
+        }
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerview.setLayoutManager(mLayoutManager);
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         recyclerview.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerview.setAdapter(mAdapter);
-
-//        Toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        setSupportActionBar(toolbar);
-        mTitle.setText(toolbar.getTitle());
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 //        Mock Exercises
         for (int i = 0; i < 8; i++) {
@@ -97,6 +147,62 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
 
         setupSwipeToDelete();
 
+    }
+
+    private void btn_Zusage_onClick(View v) {
+        training.setNumberParticipants(training.getNumberParticipants() + 1);
+        training.setAcceptState(AcceptState.Accepted);
+
+        Hashtable<Integer, Boolean> myCancellations;
+        Gson gson = new Gson();
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = pref.edit();
+        String json = pref.getString("myCancellations", "");
+        myCancellations = (json == "") ? new Hashtable<Integer, Boolean>() : gson.fromJson(json, Hashtable.class);
+        myCancellations.put(training.getId(), true);
+
+        json = gson.toJson(myCancellations);
+        prefsEditor.putString("myCancellations", json);
+        prefsEditor.commit();
+
+        Intent intent = new Intent();
+        intent.putExtra("action", "accept");
+        intent.putExtra("TrainingsId", training.getId());
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    private void btn_Absage_onClick(View v) {
+
+        Intent intent = new Intent();
+
+        if(MySession.isUserLoggedIn()){
+            service.cancelTraining(training.getId());
+            intent.putExtra("userMode", "trainer");
+        }else{
+            training.setAcceptState(AcceptState.Cancelled);
+            Hashtable<Integer, Boolean> myCancellations;
+            Gson gson = new Gson();
+
+            SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+            SharedPreferences.Editor prefsEditor = pref.edit();
+            String json = pref.getString("myCancellations", "");
+            myCancellations = (json == "") ? new Hashtable<Integer, Boolean>() : gson.fromJson(json, Hashtable.class);
+            myCancellations.put(training.getId(), false);
+
+            json = gson.toJson(myCancellations);
+            prefsEditor.putString("myCancellations", json);
+            prefsEditor.commit();
+
+            intent.putExtra("userMode", "user");
+        }
+
+
+        intent.putExtra("action", "cancel");
+        intent.putExtra("TrainingsId", training.getId());
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     private void setupSwipeToDelete() {
@@ -152,5 +258,11 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
             snackbar.setActionTextColor(Color.parseColor("#ffff00"));
             snackbar.show();
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

@@ -1,7 +1,9 @@
 
 package com.example.bbischler.badminton.Main;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,7 +25,7 @@ public class trainingAdapter extends ArrayAdapter<Training> {
     private Context mContext;
     private List<Training> trainingListList = new ArrayList<>();
 
-    public trainingAdapter(@NonNull Context context, @LayoutRes ArrayList<Training> list) {
+    public trainingAdapter(@NonNull Context context, @SuppressLint("SupportAnnotationUsage") @LayoutRes ArrayList<Training> list) {
         super(context, 0, list);
         mContext = context;
         trainingListList = list;
@@ -46,6 +48,29 @@ public class trainingAdapter extends ArrayAdapter<Training> {
 
         TextView time = (TextView) listItem.findViewById(R.id.textView_time);
         time.setText(currentTraining.getTime());
+
+        int setColor = Color.WHITE;
+
+        if(currentTraining.isCancelled()){
+            setColor = Color.DKGRAY;
+        }
+        else{
+            switch(currentTraining.getAcceptState()){
+                case Accepted:
+                    setColor = Color.GREEN;
+                    break;
+                case Cancelled:
+                    setColor = Color.RED;
+                    break;
+                case Unset:
+                    setColor = Color.WHITE;
+                    break;
+            }
+        }
+
+        name.setTextColor(setColor);
+        datum.setTextColor(setColor);
+        time.setTextColor(setColor);
 
         return listItem;
     }

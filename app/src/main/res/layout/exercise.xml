@@ -15,7 +15,7 @@
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         app:srcCompat="@drawable/ic_batter" />
 
@@ -41,7 +41,7 @@
                 android:gravity="bottom"
                 android:text="TextView"
                 android:textColor="@color/font"
-                android:textSize="20sp" />
+                android:textSize="19sp" />
 
             <TextView
                 android:id="@+id/textView_exerciseTime"
@@ -53,7 +53,7 @@
                 android:text="TextView"
                 android:textAlignment="textEnd"
                 android:textColor="@color/font"
-                android:textSize="20sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <TextView
@@ -65,7 +65,7 @@
             android:background="@android:color/transparent"
             android:text="TextView"
             android:textColor="@color/greyfont"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 

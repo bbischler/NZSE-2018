@@ -37,6 +37,12 @@
             android:name=".Login.TrainerLoginActivity"
             android:label="@string/title_activity_trainer_login"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Details.ChooseExercisePopup"
+            android:theme="@style/AppTheme.CustomTheme"></activity>
+        <activity
+            android:name=".Details.NewExercisePopop"
+            android:theme="@style/AppTheme.CustomTheme"></activity>
     </application>
 
 </manifest>

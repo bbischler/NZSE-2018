@@ -5,10 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorSpace;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -20,7 +18,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -33,18 +30,12 @@ import com.example.bbischler.badminton.Service.IBadmintonServiceInterface;
 import com.example.bbischler.badminton.Service.MockBadmintonService;
 import com.example.bbischler.badminton.Service.MySession;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
-import java.nio.file.Files;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 public class DetailedTrainingActivity extends AppCompatActivity implements StartDragListener, RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
     Training training;
@@ -60,8 +51,8 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
     private RecyclerView recyclerview;
     CoordinatorLayout rootlayout;
     List<Exercise> excersises = new ArrayList<>();
-    String description = "Lorem ipsum dolor sit amet, conset etur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam";
-    String descriptionExercise = "Lorem ipsum dolor sit amet, conset etur sadipscing elitr";
+    //    String description = "Lorem ipsum dolor sit amet, conset etur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam";
+//    String descriptionExercise = "Lorem ipsum dolor sit amet, conset etur sadipscing elitr";
     IBadmintonServiceInterface service;
 
     @Override
@@ -126,10 +117,7 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
         recyclerview.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerview.setAdapter(mAdapter);
 
-//        Mock Exercises
-        for (int i = 0; i < 8; i++) {
-            excersises.add(new Exercise(i, "Übung Nr. " + i, 10 + i, descriptionExercise));
-        }
+        excersises.addAll(service.getExercises());
         training.setExcersises(excersises);
 
         trainingTime = (TextView) findViewById(R.id.textView_time);
@@ -168,12 +156,16 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Neu",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(DetailedTrainingActivity.this, NewExercisePopop.class));
+
                         dialog.dismiss();
                     }
                 });
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Katalog",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+
+                        startActivity(new Intent(DetailedTrainingActivity.this, ChooseExercisePopup.class));
                         dialog.dismiss();
                     }
                 });
@@ -192,14 +184,13 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
         String json = pref.getString("myCancellations", "");
         myCancellations = (json == "") ? new Hashtable<String, Boolean>() : gson.fromJson(json, Hashtable.class);
         String trainingID = training.getId().toString();
-//        if (myCancellations.containsKey(trainingID))
         myCancellations.remove(trainingID);
         myCancellations.put(trainingID, true);
 
-        json = gson.toJson(myCancellations, new TypeToken<HashMap<Integer, Boolean>>(){}.getType());
+        json = gson.toJson(myCancellations, new TypeToken<HashMap<Integer, Boolean>>() {
+        }.getType());
         prefsEditor.putString("myCancellations", json);
         prefsEditor.commit();
-
 
 
         Intent intent = new Intent();
@@ -226,20 +217,12 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
             String json = pref.getString("myCancellations", "");
             myCancellations = (json == "") ? new Hashtable<String, Boolean>() : gson.fromJson(json, Hashtable.class);
             String trainingID = training.getId().toString();
-//            if (myCancellations.containsKey(trainingID))
             myCancellations.remove(trainingID);
-
-//            for (Map.Entry<Integer, Boolean> entry : myCancellations.entrySet()) {
-//                Log.e("Tag", "KEy: " + entry.getKey());
-//                    Log.e("", "Typ: " + entry.getKey().getClass() + " ,Wert: " + entry.getKey());
-//                    if (entry.getKey().toString().contentEquals(trainingID.toString())) {
-//                        myCancellations.remove(trainingID);
-//                    }
-//            }
             myCancellations.put(trainingID, false);
 
 
-            json = gson.toJson(myCancellations, new TypeToken<HashMap<Integer, Boolean>>(){}.getType());
+            json = gson.toJson(myCancellations, new TypeToken<HashMap<Integer, Boolean>>() {
+            }.getType());
             prefsEditor.putString("myCancellations", json);
             prefsEditor.commit();
 

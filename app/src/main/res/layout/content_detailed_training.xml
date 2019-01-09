@@ -139,6 +139,7 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
             android:textStyle="bold" />
+
         <Button
             android:id="@+id/btn_NeueUebung"
             android:layout_width="wrap_content"
@@ -146,7 +147,7 @@
             android:layout_weight="1"
             android:background="@color/background"
             android:text="Neue Übung"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorAccent"
             android:textSize="16sp"
             android:textStyle="bold" />
     </LinearLayout>

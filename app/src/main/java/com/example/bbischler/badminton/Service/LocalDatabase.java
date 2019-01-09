@@ -52,6 +52,7 @@ public class LocalDatabase {
         Gruppen.add(liga);
 
         User trainer1 = new User("Marco", "marco@mail.de", "12345");
+        trainer1.getGroups().add("DA123");
         Trainer.add(trainer1);
     }
 }

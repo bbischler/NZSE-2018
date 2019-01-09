@@ -1,6 +1,8 @@
 package com.example.bbischler.badminton.Details;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -32,6 +34,7 @@ import com.example.bbischler.badminton.Service.MockBadmintonService;
 import com.example.bbischler.badminton.Service.MySession;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import java.nio.file.Files;
 import java.time.LocalDate;
@@ -103,6 +106,13 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
             }
         });
 
+        btn_NeueUebung.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_NeueUebung_onClick(v);
+            }
+        });
+
         if (!MySession.isUserLoggedIn()) {
             view_exerciseList.setVisibility(View.GONE);
             btn_NeueUebung.setVisibility(View.GONE);
@@ -151,25 +161,46 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
 
     }
 
+    private void btn_NeueUebung_onClick(View v) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle("Übung hinzufügen");
+        // alertDialog.setMessage("Alert message to be shown");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Neu",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Katalog",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+
     private void btn_Zusage_onClick(View v) {
         training.setNumberParticipants(training.getNumberParticipants() + 1);
         training.setAcceptState(AcceptState.Accepted);
 
-        Hashtable<Integer, Boolean> myCancellations;
+        Hashtable<String, Boolean> myCancellations;
         Gson gson = new Gson();
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
         SharedPreferences.Editor prefsEditor = pref.edit();
         String json = pref.getString("myCancellations", "");
-        myCancellations = (json == "") ? new Hashtable<Integer, Boolean>() : gson.fromJson(json, Hashtable.class);
-        Integer trainingID = training.getId();
+        myCancellations = (json == "") ? new Hashtable<String, Boolean>() : gson.fromJson(json, Hashtable.class);
+        String trainingID = training.getId().toString();
 //        if (myCancellations.containsKey(trainingID))
         myCancellations.remove(trainingID);
         myCancellations.put(trainingID, true);
 
-        json = gson.toJson(myCancellations);
+        json = gson.toJson(myCancellations, new TypeToken<HashMap<Integer, Boolean>>(){}.getType());
         prefsEditor.putString("myCancellations", json);
         prefsEditor.commit();
+
+
 
         Intent intent = new Intent();
         intent.putExtra("action", "accept");
@@ -187,14 +218,14 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
             intent.putExtra("userMode", "trainer");
         } else {
             training.setAcceptState(AcceptState.Cancelled);
-            Hashtable<Integer, Boolean> myCancellations;
+            Hashtable<String, Boolean> myCancellations;
             Gson gson = new Gson();
 
             SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
             SharedPreferences.Editor prefsEditor = pref.edit();
             String json = pref.getString("myCancellations", "");
-            myCancellations = (json == "") ? new Hashtable<Integer, Boolean>() : gson.fromJson(json, Hashtable.class);
-            Integer trainingID = training.getId();
+            myCancellations = (json == "") ? new Hashtable<String, Boolean>() : gson.fromJson(json, Hashtable.class);
+            String trainingID = training.getId().toString();
 //            if (myCancellations.containsKey(trainingID))
             myCancellations.remove(trainingID);
 
@@ -205,10 +236,10 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
 //                        myCancellations.remove(trainingID);
 //                    }
 //            }
-            myCancellations.put(training.getId(), false);
+            myCancellations.put(trainingID, false);
 
 
-            json = gson.toJson(myCancellations);
+            json = gson.toJson(myCancellations, new TypeToken<HashMap<Integer, Boolean>>(){}.getType());
             prefsEditor.putString("myCancellations", json);
             prefsEditor.commit();
 

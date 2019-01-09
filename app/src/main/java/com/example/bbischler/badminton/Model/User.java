@@ -1,9 +1,18 @@
 package com.example.bbischler.badminton.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String name;
     private String email;
     private String Password;
+
+    public ArrayList<String> getGroups() {
+        return groups;
+    }
+
+    private ArrayList<String> groups;
 
     public String getName() {
         return name;
@@ -21,5 +30,6 @@ public class User {
         this.name = name;
         this.email = email;
         Password = password;
+        groups = new ArrayList<String>();
     }
 }

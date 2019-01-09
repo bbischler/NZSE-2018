@@ -30,7 +30,7 @@ import java.util.Hashtable;
 public class MainActivity extends AppCompatActivity {
 
     IBadmintonServiceInterface service;
-    ArrayList<Training> training = new ArrayList<>();
+    ArrayList<Training> trainings = new ArrayList<>();
     private trainingAdapter _trainingAdapter;
     private ListView listView;
     private String description;
@@ -60,10 +60,14 @@ public class MainActivity extends AppCompatActivity {
         mTitle.setText(toolbar.getTitle());
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        //refreshTrainings();
+    }
+
+    private void refreshTrainings() {
         listView = (ListView) findViewById(R.id.trainingList);
         getTrainings();
 
-        _trainingAdapter = new trainingAdapter(this, training);
+        _trainingAdapter = new trainingAdapter(this, trainings);
         listView.setAdapter(_trainingAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -71,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
                                     long arg3) {
                 Training selectedTraining = (Training) arg0.getItemAtPosition(pos);
+                if(selectedTraining.isCancelled())
+                    return;
                 Log.d("############", "Items " + selectedTraining.getName());
                 Intent intent = new Intent(MainActivity.this, DetailedTrainingActivity.class);
                 Bundle b = new Bundle();
@@ -94,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 if(TrainingsId == -1)
                     return;
 
-                for(Training t : training)
+                for(Training t : trainings)
                     if(t.getId() == TrainingsId){
                         obj = t;
                         break;
@@ -119,16 +125,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void getTrainings() {
         ArrayList<String> myCodes;
-        Hashtable<Integer, Boolean> myCancellations;
-        Gson gson = new Gson();
+        Hashtable<String, Boolean> myCancellations;
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-        String json = pref.getString("myCodes", "");
-        myCodes = (json == "") ? new ArrayList<String>() : gson.fromJson(json, ArrayList.class);
+        if(MySession.isUserLoggedIn()){
+            myCodes = MySession.loggedInUser.getGroups();
+            myCancellations = new Hashtable<>();
+        }
+        else{
+            Gson gson = new Gson();
 
-        json = pref.getString("myCancellations", "");
-        myCancellations = (json == "") ? new Hashtable<Integer, Boolean> () : gson.fromJson(json, Hashtable.class);
+            SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+            String json = pref.getString("myCodes", "");
+            myCodes = (json == "") ? new ArrayList<String>() : gson.fromJson(json, ArrayList.class);
 
+            json = pref.getString("myCancellations", "");
+            myCancellations = (json == "") ? new Hashtable<String, Boolean>() : gson.fromJson(json, Hashtable.class);
+        }
+
+
+        trainings.clear();
         for(String code : myCodes){
             ArrayList<Training> tmptrainings = service.getTrainingsForGroup(code);
             for(Training t : tmptrainings){
@@ -140,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
-            training.addAll(tmptrainings);
+            trainings.addAll(tmptrainings);
         }
     }
 
@@ -151,7 +166,10 @@ public class MainActivity extends AppCompatActivity {
         if(MySession.isUserLoggedIn()){
             MenuItem loginMenuItem = menu.findItem(R.id.trainerLogin);
             loginMenuItem.setTitle("Logout");
+            MenuItem groupaddMenuItem = menu.findItem(R.id.groupAdd);
+            groupaddMenuItem.setVisible(false);
         }
+        refreshTrainings();
     }
 
     @Override
@@ -182,5 +200,9 @@ public class MainActivity extends AppCompatActivity {
         MySession.loggedInUser = null;
         MenuItem loginMenuItem = menu.findItem(R.id.trainerLogin);
         loginMenuItem.setTitle("Trainer Login");
+        MenuItem groupaddMenuItem = menu.findItem(R.id.groupAdd);
+        groupaddMenuItem.setVisible(true);
+
+        refreshTrainings();
     }
 }

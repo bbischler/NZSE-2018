@@ -44,6 +44,7 @@ public class GroupActivity extends AppCompatActivity {
         if (extras.getBoolean("isNavigatable")) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }else{
             backButtonEnabled = false;
         }
 
@@ -85,7 +86,7 @@ public class GroupActivity extends AppCompatActivity {
     private void returnToOverview() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        finish();
+        //finish();
         startActivity(intent);
     }
 

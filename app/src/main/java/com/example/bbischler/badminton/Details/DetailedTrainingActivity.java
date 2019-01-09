@@ -18,6 +18,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ import com.example.bbischler.badminton.Service.IBadmintonServiceInterface;
 import com.example.bbischler.badminton.Service.MockBadmintonService;
 import com.example.bbischler.badminton.Service.MySession;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.nio.file.Files;
 import java.time.LocalDate;
@@ -39,6 +41,7 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 public class DetailedTrainingActivity extends AppCompatActivity implements StartDragListener, RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
     Training training;
@@ -100,11 +103,10 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
             }
         });
 
-        if(!MySession.isUserLoggedIn()){
+        if (!MySession.isUserLoggedIn()) {
             view_exerciseList.setVisibility(View.GONE);
             btn_NeueUebung.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             btn_Zusage.setVisibility(View.GONE);
         }
 
@@ -160,7 +162,10 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
         SharedPreferences.Editor prefsEditor = pref.edit();
         String json = pref.getString("myCancellations", "");
         myCancellations = (json == "") ? new Hashtable<Integer, Boolean>() : gson.fromJson(json, Hashtable.class);
-        myCancellations.put(training.getId(), true);
+        Integer trainingID = training.getId();
+//        if (myCancellations.containsKey(trainingID))
+        myCancellations.remove(trainingID);
+        myCancellations.put(trainingID, true);
 
         json = gson.toJson(myCancellations);
         prefsEditor.putString("myCancellations", json);
@@ -177,10 +182,10 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
 
         Intent intent = new Intent();
 
-        if(MySession.isUserLoggedIn()){
+        if (MySession.isUserLoggedIn()) {
             service.cancelTraining(training.getId());
             intent.putExtra("userMode", "trainer");
-        }else{
+        } else {
             training.setAcceptState(AcceptState.Cancelled);
             Hashtable<Integer, Boolean> myCancellations;
             Gson gson = new Gson();
@@ -189,7 +194,19 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
             SharedPreferences.Editor prefsEditor = pref.edit();
             String json = pref.getString("myCancellations", "");
             myCancellations = (json == "") ? new Hashtable<Integer, Boolean>() : gson.fromJson(json, Hashtable.class);
+            Integer trainingID = training.getId();
+//            if (myCancellations.containsKey(trainingID))
+            myCancellations.remove(trainingID);
+
+//            for (Map.Entry<Integer, Boolean> entry : myCancellations.entrySet()) {
+//                Log.e("Tag", "KEy: " + entry.getKey());
+//                    Log.e("", "Typ: " + entry.getKey().getClass() + " ,Wert: " + entry.getKey());
+//                    if (entry.getKey().toString().contentEquals(trainingID.toString())) {
+//                        myCancellations.remove(trainingID);
+//                    }
+//            }
             myCancellations.put(training.getId(), false);
+
 
             json = gson.toJson(myCancellations);
             prefsEditor.putString("myCancellations", json);

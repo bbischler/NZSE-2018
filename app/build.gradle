@@ -4,11 +4,13 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.example.bbischler.badminton"
-        minSdkVersion 23
-        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        minSdkVersion 26
+        targetSdkVersion 27
+
     }
     buildTypes {
         release {

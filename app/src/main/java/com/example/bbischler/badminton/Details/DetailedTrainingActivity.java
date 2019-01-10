@@ -89,14 +89,12 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
                 btn_Absage_onClick(v);
             }
         });
-
         btn_Zusage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btn_Zusage_onClick(v);
             }
         });
-
         btn_NeueUebung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,12 +102,27 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
             }
         });
 
+
         if (!MySession.isUserLoggedIn()) {
             view_exerciseList.setVisibility(View.GONE);
             btn_NeueUebung.setVisibility(View.GONE);
         } else {
             btn_Zusage.setVisibility(View.GONE);
         }
+
+        if (checkState() == true) {
+            btn_Zusage.setClickable(false);
+            btn_Absage.setClickable(true);
+            btn_Zusage.setTextColor(Color.parseColor("#FFB9B9B9"));
+        } else if (checkState() == false) {
+            btn_Zusage.setClickable(true);
+            btn_Absage.setClickable(false);
+            btn_Absage.setTextColor(Color.parseColor("#FFB9B9B9"));
+        } else {
+            btn_Zusage.setClickable(true);
+            btn_Absage.setClickable(true);
+        }
+
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerview.setLayoutManager(mLayoutManager);
@@ -149,6 +162,24 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
 
     }
 
+    private Boolean checkState() {
+
+        Hashtable<String, Boolean> myCancellations;
+        Gson gson = new Gson();
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = pref.edit();
+        String json = pref.getString("myCancellations", "");
+        myCancellations = (json == "") ? new Hashtable<String, Boolean>() : gson.fromJson(json, Hashtable.class);
+        String _trainingID = training.getId().toString();
+        if (myCancellations.get(_trainingID) == true) {
+            return true;
+        } else if (myCancellations.get(_trainingID) == false) {
+            return false;
+        } else {
+            return null;
+        }
+    }
+
     private void btn_NeueUebung_onClick(View v) {
         AlertDialog alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle("Übung hinzufügen");
@@ -186,6 +217,8 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
         String trainingID = training.getId().toString();
         myCancellations.remove(trainingID);
         myCancellations.put(trainingID, true);
+//        btn_Zusage.setEnabled(false);
+//        btn_Zusage.setClickable(false);
 
         json = gson.toJson(myCancellations, new TypeToken<HashMap<Integer, Boolean>>() {
         }.getType());

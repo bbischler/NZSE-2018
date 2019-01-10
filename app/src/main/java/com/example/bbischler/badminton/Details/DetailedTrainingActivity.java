@@ -242,38 +242,58 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
 
     private void btn_Absage_onClick(View v) {
 
-        Intent intent = new Intent();
 
-        if (MySession.isUserLoggedIn()) {
-            service.cancelTraining(training.getId());
-            intent.putExtra("userMode", "trainer");
-        } else {
-            training.setAcceptState(AcceptState.Cancelled);
-            Hashtable<String, Boolean> myCancellations;
-            Gson gson = new Gson();
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setTitle("Training wirklich absagen?");
+        // alertDialog.setMessage("Alert message to be shown");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Ja",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent();
 
-            SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-            SharedPreferences.Editor prefsEditor = pref.edit();
-            String json = pref.getString("myCancellations", "");
-            myCancellations = (json == "") ? new Hashtable<String, Boolean>() : gson.fromJson(json, Hashtable.class);
-            String trainingID = training.getId().toString();
-            myCancellations.remove(trainingID);
-            myCancellations.put(trainingID, false);
+                        if (MySession.isUserLoggedIn()) {
+                            service.cancelTraining(training.getId());
+                            intent.putExtra("userMode", "trainer");
+                        } else {
+                            training.setAcceptState(AcceptState.Cancelled);
+                            Hashtable<String, Boolean> myCancellations;
+                            Gson gson = new Gson();
 
-
-            json = gson.toJson(myCancellations, new TypeToken<HashMap<Integer, Boolean>>() {
-            }.getType());
-            prefsEditor.putString("myCancellations", json);
-            prefsEditor.commit();
-
-            intent.putExtra("userMode", "user");
-        }
+                            SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor prefsEditor = pref.edit();
+                            String json = pref.getString("myCancellations", "");
+                            myCancellations = (json == "") ? new Hashtable<String, Boolean>() : gson.fromJson(json, Hashtable.class);
+                            String trainingID = training.getId().toString();
+                            myCancellations.remove(trainingID);
+                            myCancellations.put(trainingID, false);
 
 
-        intent.putExtra("action", "cancel");
-        intent.putExtra("TrainingsId", training.getId());
-        setResult(RESULT_OK, intent);
-        finish();
+                            json = gson.toJson(myCancellations, new TypeToken<HashMap<Integer, Boolean>>() {
+                            }.getType());
+                            prefsEditor.putString("myCancellations", json);
+                            prefsEditor.commit();
+
+                            intent.putExtra("userMode", "user");
+                        }
+
+
+                        intent.putExtra("action", "cancel");
+                        intent.putExtra("TrainingsId", training.getId());
+                        setResult(RESULT_OK, intent);
+                        finish();
+
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Nein",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
     private void setupSwipeToDelete() {

@@ -6,6 +6,6 @@
     <color name="colorPrimaryLight">#6c7989</color>
     <color name="background">#eaeaea</color>
     <color name="loginButton">#536176</color>
-    <color name="font">#232323</color>
+    <color name="font">#282828</color>
     <color name="greyfont">#666666</color>
 </resources>

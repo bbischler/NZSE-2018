@@ -110,17 +110,18 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
             btn_Zusage.setVisibility(View.GONE);
         }
 
-        if (checkState() == true) {
-            btn_Zusage.setClickable(false);
+
+        if (checkState() == null) {
+            btn_Zusage.setClickable(true);
             btn_Absage.setClickable(true);
-            btn_Zusage.setTextColor(Color.parseColor("#FFB9B9B9"));
         } else if (checkState() == false) {
             btn_Zusage.setClickable(true);
             btn_Absage.setClickable(false);
             btn_Absage.setTextColor(Color.parseColor("#FFB9B9B9"));
         } else {
-            btn_Zusage.setClickable(true);
+            btn_Zusage.setClickable(false);
             btn_Absage.setClickable(true);
+            btn_Zusage.setTextColor(Color.parseColor("#FFB9B9B9"));
         }
 
 
@@ -171,13 +172,19 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
         String json = pref.getString("myCancellations", "");
         myCancellations = (json == "") ? new Hashtable<String, Boolean>() : gson.fromJson(json, Hashtable.class);
         String _trainingID = training.getId().toString();
-        if (myCancellations.get(_trainingID) == true) {
-            return true;
-        } else if (myCancellations.get(_trainingID) == false) {
-            return false;
+        if (myCancellations.containsKey(_trainingID)) {
+
+            if (myCancellations.get(_trainingID) == true) {
+                return true;
+            } else if (myCancellations.get(_trainingID) == false) {
+                return false;
+            } else {
+                return null;
+            }
         } else {
             return null;
         }
+
     }
 
     private void btn_NeueUebung_onClick(View v) {

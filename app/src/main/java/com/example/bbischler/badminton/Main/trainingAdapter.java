@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bbischler.badminton.Model.Training;
@@ -49,28 +50,36 @@ public class trainingAdapter extends ArrayAdapter<Training> {
         TextView time = (TextView) listItem.findViewById(R.id.textView_time);
         time.setText(currentTraining.getTime());
 
+        ImageView acceptImage = (ImageView) listItem.findViewById(R.id.imageView_accept);
+        ImageView declineImage = (ImageView) listItem.findViewById(R.id.imageView_decline);
+
         int setColor = Color.WHITE;
 
-        if(currentTraining.isCancelled()){
+        if (currentTraining.isCancelled()) {
             setColor = Color.DKGRAY;
-        }
-        else{
-            switch(currentTraining.getAcceptState()){
+        } else {
+            switch (currentTraining.getAcceptState()) {
                 case Accepted:
-                    setColor = Color.GREEN;
+                    acceptImage.setVisibility(View.VISIBLE);
+                    declineImage.setVisibility(View.GONE);
+//                    setColor = Color.GREEN;
                     break;
                 case Cancelled:
-                    setColor = Color.RED;
+                    acceptImage.setVisibility(View.GONE);
+                    declineImage.setVisibility(View.VISIBLE);
+//                    setColor = Color.RED;
                     break;
                 case Unset:
-                    setColor = Color.WHITE;
+                    acceptImage.setVisibility(View.GONE);
+                    declineImage.setVisibility(View.GONE);
+//                    setColor = Color.WHITE;
                     break;
             }
         }
 
-        name.setTextColor(setColor);
-        datum.setTextColor(setColor);
-        time.setTextColor(setColor);
+//        name.setTextColor(setColor);
+//        datum.setTextColor(setColor);
+//        time.setTextColor(setColor);
 
         return listItem;
     }

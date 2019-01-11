@@ -31,14 +31,15 @@ public class NewExercisePopop extends Activity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels;
         int height = dm.heightPixels;
-        getWindow().setLayout((int) (width * 0.8), (int) (height * 0.8));
+        getWindow().setLayout((int) (width * 0.85), (int) (height * 0.85));
 
 
         timerIntervalls.addAll(service.getTimeIntervalls());
 
         Spinner dropdownExerciseTimes = findViewById(R.id.spinner_newExerciseTime);
-        ArrayAdapter<Integer> adapterTimes = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
-        adapterTimes.addAll(timerIntervalls);
+        ArrayAdapter<Integer> adapterTimes = new ArrayAdapter<Integer>(
+                this, R.layout.spinner_item, timerIntervalls
+        );
         dropdownExerciseTimes.setAdapter(adapterTimes);
 
 

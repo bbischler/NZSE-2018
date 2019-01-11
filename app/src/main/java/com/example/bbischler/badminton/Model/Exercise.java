@@ -26,7 +26,7 @@ public class Exercise {
 
 
     public String getDuration() {
-        return duration + " min";
+        return duration.toString();
     }
 
     public String getDescription() {

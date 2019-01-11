@@ -12,11 +12,10 @@
         android:id="@+id/trainingList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:divider="@android:color/transparent"
-        android:dividerHeight="5.0dp"
+        android:dividerHeight="1dp"
         android:footerDividersEnabled="false"
         android:scrollIndicators="right" />
 

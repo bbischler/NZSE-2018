@@ -50,7 +50,7 @@ public class Training {
         this.beginTime = beginTime;
         this.endTime = endTime;
         this.description = description;
-        this.studentsNumber = students;
+        this.numberParticipants = students;
         this.acceptState = AcceptState.Unset;
     }
 
@@ -68,7 +68,17 @@ public class Training {
     }
 
     public String getDatum() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.mm.yy");
+        return sdf.format(datum);
+    }
+
+    public String getDatumMonth() {
+        SimpleDateFormat sdf = new SimpleDateFormat("DD.MM");
+        return sdf.format(datum);
+    }
+
+    public String getDatumYear() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         return sdf.format(datum);
     }
 
@@ -119,7 +129,7 @@ public class Training {
     }
 
     public String getStudentsNumber() {
-        return "Zusagen: " + studentsNumber;
+        return "Zusagen: " + numberParticipants;
     }
 
     public void setStudentsNumber(Integer studentsNumber) {

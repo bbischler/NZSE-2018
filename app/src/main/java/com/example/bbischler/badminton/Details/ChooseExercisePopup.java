@@ -52,7 +52,7 @@ public class ChooseExercisePopup extends Activity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         int width = dm.widthPixels;
         int height = dm.heightPixels;
-        getWindow().setLayout((int) (width * 0.8), (int) (height * 0.8));
+        getWindow().setLayout((int) (width * 0.85), (int) (height * 0.85));
 
         excersises.addAll(service.getExercises());
         for (Exercise e : excersises) {
@@ -63,11 +63,12 @@ public class ChooseExercisePopup extends Activity {
         Spinner dropdownExerciseNames = findViewById(R.id.spinner_exerciseNames);
         Spinner dropdownExerciseTimes = findViewById(R.id.spinner_exerciseTime);
 
-        ArrayAdapter<String> adapterNames = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
-        adapterNames.addAll(excersiseNames);
-
-        ArrayAdapter<Integer> adapterTimes = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
-        adapterTimes.addAll(timerIntervalls);
+        ArrayAdapter<String> adapterNames = new ArrayAdapter<String>(
+                this, R.layout.spinner_item, excersiseNames
+        );
+        ArrayAdapter<Integer> adapterTimes = new ArrayAdapter<Integer>(
+                this, R.layout.spinner_item, timerIntervalls
+        );
 
         dropdownExerciseNames.setAdapter(adapterNames);
         dropdownExerciseTimes.setAdapter(adapterTimes);

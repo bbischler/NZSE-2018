@@ -33,7 +33,7 @@ public class Group {
 
     String groupCode;
 
-    public Group(String name, String groupCode){
+    public Group(String name, String groupCode) {
         this.name = name;
         this.groupCode = groupCode;
         trainings = new ArrayList<>();

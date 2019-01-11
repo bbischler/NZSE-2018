@@ -224,8 +224,6 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
         String trainingID = training.getId().toString();
         myCancellations.remove(trainingID);
         myCancellations.put(trainingID, true);
-//        btn_Zusage.setEnabled(false);
-//        btn_Zusage.setClickable(false);
 
         json = gson.toJson(myCancellations, new TypeToken<HashMap<Integer, Boolean>>() {
         }.getType());
@@ -250,6 +248,7 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent();
+                        training.setNumberParticipants(training.getNumberParticipants() - 1);
 
                         if (MySession.isUserLoggedIn()) {
                             service.cancelTraining(training.getId());

@@ -22,11 +22,14 @@ public class LaunchActivity extends Activity {
         Gson gson = new Gson();
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = pref.edit();
+//        editor.clear();
+//        editor.commit();
         String json = pref.getString("myCodes", "");
         myCodes = (json == "") ? new ArrayList<String>() : gson.fromJson(json, ArrayList.class);
 
         // determine where to go
-        if(myCodes.size() > 0) {
+        if (myCodes.size() > 0) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             finish();
@@ -39,4 +42,5 @@ public class LaunchActivity extends Activity {
             startActivity(intent);
         }
     }
+
 }

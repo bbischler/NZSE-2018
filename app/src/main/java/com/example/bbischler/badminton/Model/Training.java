@@ -2,6 +2,7 @@ package com.example.bbischler.badminton.Model;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class Training {
     Date beginTime;
     Date endTime;
     String description;
-    List<Exercise> excersises;
+    ArrayList<TrainingExercise> excersises;
     Integer studentsNumber;
 
     public Training(Integer id, String name, Date datum, Date beginTime, Date endTime, String description, Integer students) {
@@ -52,14 +53,15 @@ public class Training {
         this.description = description;
         this.numberParticipants = students;
         this.acceptState = AcceptState.Unset;
+        this.excersises = new ArrayList<TrainingExercise>();
     }
 
 
-    public List<Exercise> getExcersises() {
+    public ArrayList<TrainingExercise> getExcersises() {
         return excersises;
     }
 
-    public void setExcersises(List<Exercise> excersises) {
+    public void setExcersises(ArrayList<TrainingExercise> excersises) {
         this.excersises = excersises;
     }
 

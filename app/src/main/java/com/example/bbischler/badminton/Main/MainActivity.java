@@ -41,7 +41,20 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         this.menu = menu;
+        setOptionsMenuForLoggedIn();
+
+
         return true;
+    }
+
+    private void setOptionsMenuForLoggedIn(){
+        if(MySession.isUserLoggedIn() && menu != null){
+            MenuItem loginMenuItem = menu.findItem(R.id.trainerLogin);
+            loginMenuItem.setTitle("Logout");
+
+            MenuItem groupaddMenuItem = menu.findItem(R.id.groupAdd);
+            groupaddMenuItem.setVisible(false);
+        }
     }
 
     @Override
@@ -163,13 +176,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-
-        if(MySession.isUserLoggedIn()){
-            MenuItem loginMenuItem = menu.findItem(R.id.trainerLogin);
-            loginMenuItem.setTitle("Logout");
-            MenuItem groupaddMenuItem = menu.findItem(R.id.groupAdd);
-            groupaddMenuItem.setVisible(false);
-        }
+        setOptionsMenuForLoggedIn();
         refreshTrainings();
     }
 

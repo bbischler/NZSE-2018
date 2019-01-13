@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.example.bbischler.badminton.Model.AcceptState;
 import com.example.bbischler.badminton.Model.Exercise;
 import com.example.bbischler.badminton.Model.Training;
+import com.example.bbischler.badminton.Model.TrainingExercise;
 import com.example.bbischler.badminton.R;
 import com.example.bbischler.badminton.Service.IBadmintonServiceInterface;
 import com.example.bbischler.badminton.Service.MockBadmintonService;
@@ -50,7 +51,7 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
     Button btn_NeueUebung;
     private RecyclerView recyclerview;
     CoordinatorLayout rootlayout;
-    List<Exercise> excersises = new ArrayList<>();
+    //ArrayList<Exercise> excersises = new ArrayList<>();
     //    String description = "Lorem ipsum dolor sit amet, conset etur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam";
 //    String descriptionExercise = "Lorem ipsum dolor sit amet, conset etur sadipscing elitr";
     IBadmintonServiceInterface service;
@@ -81,7 +82,7 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
         view_exerciseList = findViewById(R.id.exerciseList_View);
         training = service.getTraining(trainingID);
         recyclerview = (RecyclerView) findViewById(R.id.exerciseList);
-        mAdapter = new RecyclerViewAdapter(excersises, this);
+        mAdapter = new RecyclerViewAdapter(training.getExcersises(), this, trainingID);
 
         btn_Absage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,8 +132,10 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
         recyclerview.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerview.setAdapter(mAdapter);
 
+        /*
         excersises.addAll(service.getExercises());
         training.setExcersises(excersises);
+        */
 
         trainingTime = (TextView) findViewById(R.id.textView_time);
         trainingTime.setText(training.getTime());
@@ -165,6 +168,8 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
 
     private Boolean checkState() {
 
+        if(MySession.isUserLoggedIn())
+            return null;
         Hashtable<String, Boolean> myCancellations;
         Gson gson = new Gson();
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
@@ -319,20 +324,23 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
     @Override
     public void requestDrag(RecyclerView.ViewHolder viewHolder) {
         touchHelper.startDrag(viewHolder);
+        System.out.println("Debug");
     }
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (viewHolder instanceof RecyclerViewAdapter.MyViewHolder) {
             // get the removed item name to display it in snack bar
-            String name = excersises.get(viewHolder.getAdapterPosition()).getName();
+            String name = training.getExcersises().get(viewHolder.getAdapterPosition()).getExercise().getName();
 
             // backup of removed item for undo purpose
-            final Exercise deletedItem = excersises.get(viewHolder.getAdapterPosition());
+            final TrainingExercise deletedItem = training.getExcersises().get(viewHolder.getAdapterPosition());
             final int deletedIndex = viewHolder.getAdapterPosition();
 
             // remove the item from recycler view
-            mAdapter.removeItem(viewHolder.getAdapterPosition());
+            int pos = viewHolder.getAdapterPosition();
+
+            mAdapter.removeItem(pos);
 
             // showing snack bar with Undo option
             Snackbar snackbar = Snackbar

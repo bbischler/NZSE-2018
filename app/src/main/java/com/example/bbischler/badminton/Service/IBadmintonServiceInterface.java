@@ -1,6 +1,7 @@
 package com.example.bbischler.badminton.Service;
 
 import com.example.bbischler.badminton.Model.Training;
+import com.example.bbischler.badminton.Model.TrainingExercise;
 import com.example.bbischler.badminton.Model.User;
 import com.example.bbischler.badminton.Model.Exercise;
 
@@ -20,4 +21,6 @@ public interface IBadmintonServiceInterface {
     ArrayList<Exercise> getExercises();
 
     ArrayList<Integer> getTimeIntervalls();
+    void deleteExerciseAtPosition(int trainingId, int position);
+    void setExercisesForTraining( int trainingid, ArrayList<TrainingExercise> exercises);
 }

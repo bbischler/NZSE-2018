@@ -2,6 +2,7 @@ package com.example.bbischler.badminton.Service;
 
 import com.example.bbischler.badminton.Model.Group;
 import com.example.bbischler.badminton.Model.Training;
+import com.example.bbischler.badminton.Model.TrainingExercise;
 import com.example.bbischler.badminton.Model.User;
 import com.example.bbischler.badminton.Model.Exercise;
 
@@ -70,5 +71,16 @@ public class MockBadmintonService implements IBadmintonServiceInterface {
         ArrayList<Integer> timeintervalls = new ArrayList<>();
         timeintervalls = LocalDatabase.getInstance().TimeIntervalls;
         return timeintervalls;
+    }
+
+    @Override
+    public void deleteExerciseAtPosition(int trainingId, int position) {
+
+    }
+
+    @Override
+    public void setExercisesForTraining(int trainingid, ArrayList<TrainingExercise> exercises) {
+        Training t = getTraining(trainingid);
+        t.setExcersises(exercises);
     }
 }

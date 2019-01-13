@@ -11,14 +11,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bbischler.badminton.Model.Exercise;
+import com.example.bbischler.badminton.Model.TrainingExercise;
 import com.example.bbischler.badminton.R;
+import com.example.bbischler.badminton.Service.IBadmintonServiceInterface;
+import com.example.bbischler.badminton.Service.MockBadmintonService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> implements ItemMoveCallback.ItemTouchHelperContract {
 
-    private List<Exercise> data;
+    private ArrayList<TrainingExercise> data;
+    int trainingID;
+    IBadmintonServiceInterface service;
 
     private final StartDragListener mStartDragListener;
 
@@ -40,14 +46,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             time = itemView.findViewById(R.id.textView_exerciseTime);
             desc = itemView.findViewById(R.id.textView_exerciseDesc);
             imageView = itemView.findViewById(R.id.handle);
-
-
         }
     }
 
-    public RecyclerViewAdapter(List<Exercise> data, StartDragListener startDragListener) {
+    public RecyclerViewAdapter(ArrayList<TrainingExercise> data, StartDragListener startDragListener, int trainingid) {
         mStartDragListener = startDragListener;
         this.data = data;
+        this.trainingID = trainingid;
+        service = new MockBadmintonService();
     }
 
     @Override
@@ -58,9 +64,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        holder.name.setText(data.get(position).getName());
-        holder.time.setText(data.get(position).getDuration());
-        holder.desc.setText(data.get(position).getDescription());
+        TrainingExercise exercise = data.get(position);
+
+        holder.name.setText(exercise.getExercise().getName());
+        holder.time.setText(""+exercise.getDurationMinutes());
+        holder.desc.setText(exercise.getExercise().getDescription());
 
         holder.imageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -82,7 +90,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         notifyItemRemoved(position);
     }
 
-    public void restoreItem(Exercise item, int position) {
+    public void restoreItem(TrainingExercise item, int position) {
         data.add(position, item);
         // notify item added by position
         notifyItemInserted(position);
@@ -117,6 +125,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onRowClear(MyViewHolder myViewHolder) {
         myViewHolder.rowView.setBackgroundColor(Color.WHITE);
-
+        //service.setExercisesForTraining(trainingID, data);
     }
 }

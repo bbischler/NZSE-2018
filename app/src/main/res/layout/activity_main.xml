@@ -38,4 +38,12 @@
         layout="@layout/content_main"
         android:layout_height="808dp" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_add_new"
+        android:layout_margin="16dp" />
+
 </android.support.design.widget.CoordinatorLayout>

@@ -10,13 +10,11 @@ public class Exercise {
 
     Integer id;
     String name;
-    Integer duration;
     String description;
 
-    public Exercise(Integer id, String name, Integer duration, String description) {
+    public Exercise(Integer id, String name, String description) {
         this.id = id;
         this.name = name;
-        this.duration = duration;
         this.description = description;
 
     }
@@ -25,9 +23,6 @@ public class Exercise {
     // Getter //
 
 
-    public String getDuration() {
-        return duration.toString();
-    }
 
     public String getDescription() {
         return description;
@@ -43,10 +38,6 @@ public class Exercise {
 
     // Setter //
 
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
 
     public void setDescription(String description) {
         this.description = description;

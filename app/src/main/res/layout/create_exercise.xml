@@ -32,16 +32,16 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
                 android:layout_marginTop="40dp"
                 android:background="@android:color/white"
                 android:textColorHint="@android:color/black">
 
                 <EditText
-                    android:id="@+id/newExerciseName"
+                    android:id="@+id/txt_newExerciseName"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:ellipsize="start"
                     android:hint="Name der Übung"
                     android:inputType="text"
@@ -60,7 +60,7 @@
                 android:textColorHint="@color/font">
 
                 <EditText
-                    android:id="@+id/newExerciseDesc"
+                    android:id="@+id/txt_newExerciseDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -73,28 +73,32 @@
                     android:singleLine="true"
                     android:textColor="@color/font"
                     android:textColorHint="@color/font"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
 
             </android.support.design.widget.TextInputLayout>
 
 
-            <TextView
-                android:id="@+id/textView3"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="40dp"
                 android:layout_marginTop="40dp"
-                android:padding="5dp"
-                android:text="Dauer (Minuten):"
-                android:textColor="@color/font"
-                android:textSize="20sp" />
+                android:background="@android:color/white"
+                android:textColorHint="@android:color/black">
 
-            <Spinner
-                android:id="@+id/spinner_newExerciseTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_spinner_background"
-                android:spinnerMode="dropdown" />
+                <EditText
+                    android:id="@+id/txt_newExerciseMinutes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="start"
+                    android:hint="Dauer (Minuten)"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textColor="@color/font"
+                    android:textColorHint="@color/font"
+                    android:textSize="20dp" />
+
+            </android.support.design.widget.TextInputLayout>
 
 
         </LinearLayout>

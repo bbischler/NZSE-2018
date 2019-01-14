@@ -25,7 +25,7 @@
                 android:layout_alignParentTop="true"
                 android:gravity="center_vertical|center_horizontal"
                 android:padding="5dp"
-                android:text="Katalog"
+                android:text="Neues Training"
                 android:textColor="@color/colorPrimary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -37,12 +37,12 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="40dp"
                 android:padding="5dp"
-                android:text="Übung:"
+                android:text="Gruppe"
                 android:textColor="@color/font"
                 android:textSize="20sp" />
 
             <Spinner
-                android:id="@+id/spinner_exerciseNames"
+                android:id="@+id/spinner_groups"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_spinner_background"
@@ -51,18 +51,18 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="20dp"
                 android:background="@android:color/white"
                 android:textColorHint="@android:color/black">
 
                 <EditText
-                    android:id="@+id/txt_exerciseMinutes"
+                    android:id="@+id/txt_Datum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="start"
-                    android:hint="Dauer (Minuten)"
-                    android:inputType="text"
+                    android:hint="Datum"
+                    android:inputType="date"
                     android:singleLine="true"
                     android:textColor="@color/font"
                     android:textColorHint="@color/font"
@@ -70,6 +70,73 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/white"
+                android:textColorHint="@color/font">
+
+                <EditText
+                    android:id="@+id/txt_Von"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:hint="Von"
+                    android:inputType="time"
+                    android:singleLine="true"
+                    android:textColor="@color/font"
+                    android:textColorHint="@color/font"
+                    android:textSize="20dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/white"
+                android:textColorHint="@color/font">
+
+                <EditText
+                    android:id="@+id/txt_Bis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:hint="Bis"
+                    android:inputType="time"
+                    android:singleLine="true"
+                    android:textColor="@color/font"
+                    android:textColorHint="@color/font"
+                    android:textSize="20dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@android:color/white"
+                android:textColorHint="@color/font">
+
+                <EditText
+                    android:id="@+id/txt_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:hint="Beschreibung"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/font"
+                    android:textColorHint="@color/font"
+                    android:textSize="20dp" />
+
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 
@@ -90,7 +157,7 @@
                 android:textSize="16sp" />
 
             <Button
-                android:id="@+id/button_addExercise"
+                android:id="@+id/button_addTraining"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -100,6 +167,8 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
+
+
 
     </LinearLayout>
 

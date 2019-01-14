@@ -14,6 +14,8 @@ public interface IBadmintonServiceInterface {
 
     ArrayList<Training> getTrainingsForGroup(String groupCode);
 
+
+    void addTraining(String groupId, Training t);
     void cancelTraining(Integer id);
 
     Training getTraining(int id);
@@ -21,6 +23,12 @@ public interface IBadmintonServiceInterface {
     ArrayList<Exercise> getExercises();
 
     ArrayList<Integer> getTimeIntervalls();
+
+    String getNameForGroupId(String groupId);
+
+    void addExerciseForTraining(TrainingExercise te, int trainingId);
+    void addExercise(Exercise e);
+
     void deleteExerciseAtPosition(int trainingId, int position);
     void setExercisesForTraining( int trainingid, ArrayList<TrainingExercise> exercises);
 }

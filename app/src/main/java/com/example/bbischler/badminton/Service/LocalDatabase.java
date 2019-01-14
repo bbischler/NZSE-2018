@@ -52,12 +52,12 @@ public class LocalDatabase {
         }
         */
 
-        Exercise e1 = new Exercise(1, "Aufschlag - Vorhand", 20, "Hier werden wir Vorhandaufschläge üben");
-        Exercise e2 = new Exercise(2, "Aufschlag - Rückhand", 20, "Hier werden wir Rückhandaufschläge üben");
-        Exercise e3 = new Exercise(3, "Netzdrop - Vorhand", 10, "Netzdrop-Übung mit Zuwurf");
-        Exercise e4 = new Exercise(4, "Netzdrop - Rückhand", 10, "Netzdrop-Übung mit Zuwurf");
-        Exercise e5 = new Exercise(5, "Smash - Vorhand", 10, "Clear Übung auf dem ganzen Feld - Vorhand");
-        Exercise e6 = new Exercise(6, "Smash - Rückhand", 10, "Clear Übung auf dem ganzen Feld - Rückhand");
+        Exercise e1 = new Exercise(1, "Aufschlag - Vorhand",  "Hier werden wir Vorhandaufschläge üben");
+        Exercise e2 = new Exercise(2, "Aufschlag - Rückhand",  "Hier werden wir Rückhandaufschläge üben");
+        Exercise e3 = new Exercise(3, "Netzdrop - Vorhand",  "Netzdrop-Übung mit Zuwurf");
+        Exercise e4 = new Exercise(4, "Netzdrop - Rückhand",  "Netzdrop-Übung mit Zuwurf");
+        Exercise e5 = new Exercise(5, "Smash - Vorhand",  "Clear Übung auf dem ganzen Feld - Vorhand");
+        Exercise e6 = new Exercise(6, "Smash - Rückhand",  "Clear Übung auf dem ganzen Feld - Rückhand");
 
         Exercises.add(e1);
         Exercises.add(e2);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
     private String description;
     Menu menu;
+    FloatingActionButton fab;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -63,6 +65,13 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fab_onClick();
+            }
+        });
 
         service = new MockBadmintonService();
 
@@ -72,8 +81,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mTitle.setText(toolbar.getTitle());
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
 
-        //refreshTrainings();
+    private void fab_onClick() {
+        Intent i = new Intent(this, NewTrainingPopup.class);
+        startActivityForResult(i, 2);
     }
 
     private void refreshTrainings() {
@@ -134,6 +146,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+        else if (requestCode == 2){
+            if(resultCode == RESULT_OK)
+                refreshTrainings();
+        }
     }
 
     private void getTrainings() {
@@ -177,6 +193,8 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         setOptionsMenuForLoggedIn();
+        fab.setVisibility(MySession.isUserLoggedIn() ? View.VISIBLE : View.GONE);
+
         refreshTrainings();
     }
 

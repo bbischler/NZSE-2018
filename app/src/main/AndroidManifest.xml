@@ -38,10 +38,13 @@
             android:label="@string/title_activity_trainer_login"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".Details.ChooseExercisePopup"
+            android:name=".Exercise.ChooseExercisePopup"
             android:theme="@style/AppTheme.CustomTheme"></activity>
         <activity
-            android:name=".Details.NewExercisePopop"
+            android:name=".Exercise.NewExercisePopop"
+            android:theme="@style/AppTheme.CustomTheme"></activity>
+        <activity
+            android:name=".Main.NewTrainingPopup"
             android:theme="@style/AppTheme.CustomTheme"></activity>
     </application>
 

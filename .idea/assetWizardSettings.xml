@@ -19,8 +19,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\MH\Desktop\Trash can - 01.png" />
-                                      <entry key="outputName" value="ic_delete" />
+                                      <entry key="imageAsset" value="C:\Users\marco\Desktop\Add New.png" />
+                                      <entry key="outputName" value="ic_add_new" />
                                       <entry key="theme" value="HOLO_DARK" />
                                     </map>
                                   </option>

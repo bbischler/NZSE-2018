@@ -22,8 +22,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.bbischler.badminton.Exercise.ChooseExercisePopup;
+import com.example.bbischler.badminton.Exercise.NewExercisePopop;
 import com.example.bbischler.badminton.Model.AcceptState;
-import com.example.bbischler.badminton.Model.Exercise;
 import com.example.bbischler.badminton.Model.Training;
 import com.example.bbischler.badminton.Model.TrainingExercise;
 import com.example.bbischler.badminton.R;
@@ -33,10 +34,8 @@ import com.example.bbischler.badminton.Service.MySession;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.List;
 
 public class DetailedTrainingActivity extends AppCompatActivity implements StartDragListener, RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
     Training training;
@@ -199,20 +198,32 @@ public class DetailedTrainingActivity extends AppCompatActivity implements Start
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Neu",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(DetailedTrainingActivity.this, NewExercisePopop.class));
-
+                        Intent i =new Intent(DetailedTrainingActivity.this, NewExercisePopop.class);
+                        i.putExtra("trainingID", training.getId());
+                        startActivityForResult(i, 1);
                         dialog.dismiss();
                     }
                 });
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Katalog",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-
-                        startActivity(new Intent(DetailedTrainingActivity.this, ChooseExercisePopup.class));
+                        Intent i = new Intent(DetailedTrainingActivity.this, ChooseExercisePopup.class);
+                        i.putExtra("trainingID", training.getId());
+                        startActivityForResult(i, 1);
                         dialog.dismiss();
                     }
                 });
         alertDialog.show();
+        System.out.println("Debug");
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                mAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     private void btn_Zusage_onClick(View v) {

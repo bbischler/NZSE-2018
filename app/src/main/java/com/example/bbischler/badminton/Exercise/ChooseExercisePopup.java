@@ -1,4 +1,4 @@
-package com.example.bbischler.badminton.Details;
+package com.example.bbischler.badminton.Exercise;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,9 +10,11 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.bbischler.badminton.Model.Exercise;
+import com.example.bbischler.badminton.Model.TrainingExercise;
 import com.example.bbischler.badminton.R;
 import com.example.bbischler.badminton.Service.IBadmintonServiceInterface;
 import com.example.bbischler.badminton.Service.MockBadmintonService;
@@ -27,6 +29,9 @@ public class ChooseExercisePopup extends Activity {
     List<Integer> timerIntervalls = new ArrayList<>();
     Button btn_Abort;
     Button btn_AddExercise;
+    Spinner dropdownExerciseNames;
+    EditText textMinutes;
+    int trainingID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +52,12 @@ public class ChooseExercisePopup extends Activity {
                 btn_AddExervise_onClick(v);
             }
         });
+        textMinutes = findViewById(R.id.txt_exerciseMinutes);
+
+        Bundle b = getIntent().getExtras();
+        trainingID = -1; // or other values
+        if (b != null)
+            trainingID = b.getInt("trainingID");
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -60,27 +71,46 @@ public class ChooseExercisePopup extends Activity {
         }
         timerIntervalls.addAll(service.getTimeIntervalls());
 
-        Spinner dropdownExerciseNames = findViewById(R.id.spinner_exerciseNames);
-        Spinner dropdownExerciseTimes = findViewById(R.id.spinner_exerciseTime);
+        dropdownExerciseNames = findViewById(R.id.spinner_exerciseNames);
 
         ArrayAdapter<String> adapterNames = new ArrayAdapter<String>(
                 this, R.layout.spinner_item, excersiseNames
         );
-        ArrayAdapter<Integer> adapterTimes = new ArrayAdapter<Integer>(
-                this, R.layout.spinner_item, timerIntervalls
-        );
 
         dropdownExerciseNames.setAdapter(adapterNames);
-        dropdownExerciseTimes.setAdapter(adapterTimes);
-
-
     }
 
     private void btn_Abort_onClick(View v) {
-
+        Intent intent = new Intent();
+        setResult(RESULT_CANCELED, intent);
+        finish();
     }
 
     private void btn_AddExervise_onClick(View v) {
+        String minutesTesxt = textMinutes.getText().toString();
+        if(minutesTesxt.isEmpty())
+            return;
+        int minutes = Integer.parseInt(minutesTesxt);
+        String exerciseName = dropdownExerciseNames.getSelectedItem().toString();
+        Exercise selectedExercise = null;
+        for(Exercise e : excersises){
+            if(e.getName().equals(exerciseName)){
+                selectedExercise = e;
+                break;
+            }
+        }
 
+        if(selectedExercise != null){
+            TrainingExercise te = new TrainingExercise(selectedExercise, minutes);
+            service.addExerciseForTraining(te, trainingID);
+
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+
+        Intent intent = new Intent();
+        setResult(RESULT_CANCELED, intent);
+        finish();
     }
 }

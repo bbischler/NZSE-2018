@@ -37,6 +37,30 @@ public class MockBadmintonService implements IBadmintonServiceInterface {
         return trainings;
     }
 
+    private Group getGruppe(String groupId){
+        Group obj = null;
+
+        for (Group g : LocalDatabase.getInstance().Gruppen)
+            if (g.getGroupCode().equals(groupId))
+                return g;
+
+        return null;
+    }
+
+    @Override
+    public void addTraining(String groupId, Training t) {
+        Group g = getGruppe(groupId);
+
+        int highestId = 0;
+        for(Training tr : LocalDatabase.getInstance().Trainings){
+            if(tr.getId() > highestId)
+                highestId = tr.getId();
+        }
+        t.setId(highestId+1);
+        g.getTrainings().add(t);
+        LocalDatabase.getInstance().Trainings.add(t);
+    }
+
     @Override
     public void cancelTraining(Integer id) {
         Training obj = null;
@@ -71,6 +95,33 @@ public class MockBadmintonService implements IBadmintonServiceInterface {
         ArrayList<Integer> timeintervalls = new ArrayList<>();
         timeintervalls = LocalDatabase.getInstance().TimeIntervalls;
         return timeintervalls;
+    }
+
+    @Override
+    public String getNameForGroupId(String groupId) {
+        for(Group g : LocalDatabase.getInstance().Gruppen){
+            if(g.getGroupCode().equals(groupId)){
+                return g.getName();
+            }
+        }
+        return "";
+    }
+
+    @Override
+    public void addExerciseForTraining(TrainingExercise te, int trainingId) {
+        Training t = getTraining(trainingId);
+        t.getExcersises().add(te);
+    }
+
+    @Override
+    public void addExercise(Exercise e) {
+        int highestId = 0;
+        for(Exercise ex : LocalDatabase.getInstance().Exercises){
+            if(ex.getId() > highestId)
+                highestId = ex.getId();
+        }
+        e.setId(highestId+1);
+        LocalDatabase.getInstance().Exercises.add(e);
     }
 
     @Override

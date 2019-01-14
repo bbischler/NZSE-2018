@@ -62,12 +62,15 @@ public class trainingAdapter extends ArrayAdapter<Training> {
         TextView indicator = (TextView) listItem.findViewById(R.id.indicator);
 
         FrameLayout trainingFrame = listItem.findViewById(R.id.trainingFrame);
+        TextView trainerCancelled = (TextView) listItem.findViewById(R.id.textView_trainerCancelled);
 
 
         int setColor = Color.parseColor("#FF7C7D7D");
 
         if (currentTraining.isCancelled()) {
 //            setColor = Color.DKGRAY;
+            trainerCancelled.setVisibility(View.VISIBLE);
+            trainerCancelled.setTextColor(setColor);
             trainingFrame.setBackgroundColor(Color.parseColor("#FFA1A1A1"));
             acceptImage.setVisibility(View.INVISIBLE);
             declineImage.setVisibility(View.GONE);
@@ -77,6 +80,8 @@ public class trainingAdapter extends ArrayAdapter<Training> {
             datumMonth.setTextColor(setColor);
             datumYear.setTextColor(setColor);
         } else {
+            trainerCancelled.setVisibility(View.GONE);
+
             switch (currentTraining.getAcceptState()) {
                 case Accepted:
                     acceptImage.setVisibility(View.VISIBLE);

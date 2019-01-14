@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Badminton Organizer</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_detailed_training">DetailedTrainingActivity</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_detailed_training">Details</string>
+    <string name="title_activity_login">Anmelden</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -17,6 +17,6 @@
         completions."
     </string>
     <string name="title_activity_test">TestActivity</string>
-    <string name="title_activity_group">GroupActivity</string>
-    <string name="title_activity_trainer_login">TrainerLoginActivity</string>
+    <string name="title_activity_group">Gruppe beitreten</string>
+    <string name="title_activity_trainer_login">Anmelden</string>
 </resources>

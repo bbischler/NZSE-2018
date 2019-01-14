@@ -96,6 +96,14 @@
             android:padding="5dp"
             android:src="@drawable/ic_remove_circle_black_24dp" />
 
+        <TextView
+            android:id="@+id/textView_trainerCancelled"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Vom Trainer abgesagt" />
+
     </LinearLayout>
 
 </FrameLayout>

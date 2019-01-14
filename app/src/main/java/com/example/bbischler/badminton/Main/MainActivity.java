@@ -26,6 +26,7 @@ import com.example.bbischler.badminton.Service.MySession;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Hashtable;
 
 public class MainActivity extends AppCompatActivity {
@@ -187,6 +188,13 @@ public class MainActivity extends AppCompatActivity {
 
             trainings.addAll(tmptrainings);
         }
+
+        trainings.sort(new Comparator<Training>() {
+            @Override
+            public int compare(Training t1, Training t2) {
+                return t1.getRealDate().compareTo(t2.getRealDate());
+            }
+        });
     }
 
     @Override

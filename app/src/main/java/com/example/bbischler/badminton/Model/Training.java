@@ -24,6 +24,10 @@ public class Training {
         this.numberParticipants = numberParticipants;
     }
 
+    public Date getRealDate(){
+        return datum;
+    }
+
     public AcceptState getAcceptState() {
         return acceptState;
     }

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -60,10 +61,21 @@ public class trainingAdapter extends ArrayAdapter<Training> {
 
         TextView indicator = (TextView) listItem.findViewById(R.id.indicator);
 
-        int setColor = Color.WHITE;
+        FrameLayout trainingFrame = listItem.findViewById(R.id.trainingFrame);
+
+
+        int setColor = Color.parseColor("#FF7C7D7D");
 
         if (currentTraining.isCancelled()) {
-            setColor = Color.DKGRAY;
+//            setColor = Color.DKGRAY;
+            trainingFrame.setBackgroundColor(Color.parseColor("#FFA1A1A1"));
+            acceptImage.setVisibility(View.INVISIBLE);
+            declineImage.setVisibility(View.GONE);
+            indicator.setBackgroundColor(Color.parseColor("#FFA1A1A1"));
+            name.setTextColor(setColor);
+            time.setTextColor(setColor);
+            datumMonth.setTextColor(setColor);
+            datumYear.setTextColor(setColor);
         } else {
             switch (currentTraining.getAcceptState()) {
                 case Accepted:

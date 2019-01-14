@@ -68,18 +68,19 @@ public class trainingAdapter extends ArrayAdapter<Training> {
         int setColor = Color.parseColor("#FF7C7D7D");
 
         if (currentTraining.isCancelled()) {
-//            setColor = Color.DKGRAY;
+            setColor = Color.DKGRAY;
             trainerCancelled.setVisibility(View.VISIBLE);
             trainerCancelled.setTextColor(setColor);
-            trainingFrame.setBackgroundColor(Color.parseColor("#FFA1A1A1"));
+            trainingFrame.setBackgroundColor(Color.parseColor("#FFC9C9C9"));
             acceptImage.setVisibility(View.INVISIBLE);
             declineImage.setVisibility(View.GONE);
-            indicator.setBackgroundColor(Color.parseColor("#FFA1A1A1"));
-            name.setTextColor(setColor);
-            time.setTextColor(setColor);
-            datumMonth.setTextColor(setColor);
-            datumYear.setTextColor(setColor);
+            indicator.setBackgroundColor(Color.parseColor("#FFC9C9C9"));
+//            name.setTextColor(setColor);
+//            time.setTextColor(setColor);
+//            datumMonth.setTextColor(setColor);
+//            datumYear.setTextColor(setColor);
         } else {
+            trainingFrame.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
             trainerCancelled.setVisibility(View.GONE);
 
             switch (currentTraining.getAcceptState()) {

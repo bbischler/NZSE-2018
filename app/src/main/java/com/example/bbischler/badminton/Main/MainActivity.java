@@ -201,7 +201,11 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         setOptionsMenuForLoggedIn();
-        fab.setVisibility(MySession.isUserLoggedIn() ? View.VISIBLE : View.GONE);
+        if(MySession.isUserLoggedIn())
+            fab.setVisibility(View.VISIBLE);
+        else
+            fab.setVisibility(View.GONE);
+
 
         refreshTrainings();
     }
@@ -236,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
         loginMenuItem.setTitle("Trainer Login");
         MenuItem groupaddMenuItem = menu.findItem(R.id.groupAdd);
         groupaddMenuItem.setVisible(true);
+        fab.setVisibility(View.GONE);
 
         refreshTrainings();
     }

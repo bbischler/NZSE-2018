@@ -75,12 +75,8 @@ public class trainingAdapter extends ArrayAdapter<Training> {
             acceptImage.setVisibility(View.INVISIBLE);
             declineImage.setVisibility(View.GONE);
             indicator.setBackgroundColor(Color.parseColor("#FFC9C9C9"));
-//            name.setTextColor(setColor);
-//            time.setTextColor(setColor);
-//            datumMonth.setTextColor(setColor);
-//            datumYear.setTextColor(setColor);
         } else {
-            trainingFrame.setBackgroundColor(Color.parseColor("#FFFFFFFF"));
+            trainingFrame.setBackgroundResource(R.drawable.card_background);
             trainerCancelled.setVisibility(View.GONE);
 
             switch (currentTraining.getAcceptState()) {
